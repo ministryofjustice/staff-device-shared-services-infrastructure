@@ -8,6 +8,10 @@ terraform {
   }
 }
 
+provider "aws" {
+  version = "~> 2.52"
+}
+
 data "aws_region" "current_region" {}
 
 locals {
@@ -61,12 +65,12 @@ module "label" {
   }
 }
 
-
 module "logging-ci-pipeline" {
-  source             = "./modules/ci-pipeline"
-  github_oauth_token = var.github_oauth_token
-  prefix_name        = module.label.id
-  service_name       = "logging"
-  vpc_id             = module.vpc.vpc_id
-  subnet_ids         = module.vpc.private_subnets
+  source              = "./modules/ci-pipeline"
+  github_oauth_token  = var.github_oauth_token
+  prefix_name         = module.label.id
+  service_name        = "logging"
+  vpc_id              = module.vpc.vpc_id
+  subnet_ids          = module.vpc.private_subnets
+  dev_assume_role_arn = var.dev_assume_role_arn
 }

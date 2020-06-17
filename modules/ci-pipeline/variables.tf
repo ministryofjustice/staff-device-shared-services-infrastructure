@@ -17,3 +17,7 @@ variable "prefix_name" {
 variable "service_name" {
   type = string
 }
+
+variable "dev_assume_role_arn" {
+  type = string
+}

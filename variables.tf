@@ -12,3 +12,6 @@ variable "owner-email" {
   default = "emile.swarts@digital.justice.gov.uk"
 }
 
+variable "dev_assume_role_arn" {
+  type = string
+}

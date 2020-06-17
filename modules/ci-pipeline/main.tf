@@ -125,6 +125,10 @@ resource "aws_codepipeline" "codepipeline" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [stage[0].action[0].configuration] //workarround for OAuthToken drift https://github.com/terraform-providers/terraform-provider-aws/issues/2854
+  }
+
   stage {
     name = "Lint"
 
@@ -227,7 +231,6 @@ resource "aws_iam_role" "codebuild" {
 EOF
 }
 
-
 resource "aws_iam_role_policy" "codebuild" {
   role = aws_iam_role.codebuild.name
 
@@ -260,6 +263,11 @@ resource "aws_iam_role_policy" "codebuild" {
       "Resource": [
         "*"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "${var.dev_assume_role_arn}"
     }
   ]
 }
