@@ -72,6 +72,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
       ],
       "Resource": [
         "${aws_codebuild_project.lint.id}",
+        "${aws_codebuild_project.development.id}",
         "${aws_codebuild_project.staging.id}",
         "${aws_codebuild_project.production.id}"
       ]
@@ -137,6 +138,23 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         ProjectName = aws_codebuild_project.lint.name
+      }
+    }
+  }
+
+  stage {
+    name = "Development"
+
+    action {
+      name            = "Deploy"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      input_artifacts = ["source_output"]
+      version         = "1"
+
+      configuration = {
+        ProjectName = aws_codebuild_project.development.name
       }
     }
   }
@@ -248,11 +266,45 @@ resource "aws_iam_role_policy" "codebuild" {
 POLICY
 }
 
+resource "aws_codebuild_project" "development" {
+  name          = "development"
+  description   = "Development"
+  build_timeout = "5"
+  service_role  = aws_iam_role.codebuild.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/standard:1.0"
+    type                        = "LINUX_CONTAINER"
+    image_pull_credentials_type = "CODEBUILD"
+
+    environment_variable {
+      name  = "FOO"
+      value = "BAR"
+    }
+  }
+
+  logs_config {
+    cloudwatch_logs {
+      group_name  = "${var.prefix_name}-log-group-development-${var.service_name}"
+      stream_name = "${var.prefix_name}-log-stream-development-${var.service_name}"
+    }
+  }
+
+  source {
+    type = "CODEPIPELINE"
+  }
+}
+
 resource "aws_codebuild_project" "staging" {
   name          = "staging"
   description   = "Staging"
   build_timeout = "5"
-  service_role  = "${aws_iam_role.codebuild.arn}"
+  service_role  = aws_iam_role.codebuild.arn
 
   artifacts {
     type = "CODEPIPELINE"
@@ -286,7 +338,7 @@ resource "aws_codebuild_project" "lint" {
   name          = "lint"
   description   = "Lint"
   build_timeout = "5"
-  service_role  = "${aws_iam_role.codebuild.arn}"
+  service_role  = aws_iam_role.codebuild.arn
 
   artifacts {
     type = "CODEPIPELINE"
@@ -321,7 +373,7 @@ resource "aws_codebuild_project" "production" {
   name          = "production"
   description   = "Production"
   build_timeout = "5"
-  service_role  = "${aws_iam_role.codebuild.arn}"
+  service_role  = aws_iam_role.codebuild.arn
 
   artifacts {
     type = "CODEPIPELINE"
