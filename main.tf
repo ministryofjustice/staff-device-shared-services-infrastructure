@@ -63,10 +63,10 @@ module "label" {
 
 
 module "logging-ci-pipeline" {
-  source = "./modules/ci-pipeline"
+  source             = "./modules/ci-pipeline"
   github_oauth_token = var.github_oauth_token
-  prefix_name = module.label.id
-  service_name = "logging"
-  vpc_id = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  prefix_name        = module.label.id
+  service_name       = "logging"
+  vpc_id             = module.vpc.vpc_id
+  subnet_ids         = module.vpc.private_subnets
 }

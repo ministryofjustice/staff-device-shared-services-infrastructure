@@ -3,12 +3,12 @@ variable "github_oauth_token" {
 }
 
 variable "is-production" {
-  type = bool
+  type    = bool
   default = "true"
 }
 
 variable "owner-email" {
-  type = string
+  type    = string
   default = "emile.swarts@digital.justice.gov.uk"
 }
 
