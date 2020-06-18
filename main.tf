@@ -66,11 +66,14 @@ module "label" {
   }
 }
 
-module "logging-ci-pipeline" {
-  source              = "./modules/ci-pipeline"
-  github_oauth_token  = var.github_oauth_token
+module "pttp-infrastructure-ci-pipeline" {
+  source                   = "./modules/ci-pipeline"
+  service_name             = "pttp-infrastructure"
+  github_organisation_name = "ministryofjustice"
+  github_repo_name         = "pttp-infrastructure"
+  github_oauth_token       = var.github_oauth_token
+
   prefix_name         = module.label.id
-  service_name        = "logging"
   vpc_id              = module.vpc.vpc_id
   subnet_ids          = module.vpc.private_subnets
   dev_assume_role_arn = var.dev_assume_role_arn

@@ -117,8 +117,8 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         OAuthToken           = var.github_oauth_token
-        Owner                = "emileswarts"
-        Repo                 = "terraform-mvp"
+        Owner                = var.github_organisation_name
+        Repo                 = var.github_repo_name
         Branch               = "master"
         PollForSourceChanges = "true"
       }
