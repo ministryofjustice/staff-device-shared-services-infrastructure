@@ -24,7 +24,7 @@ resource "aws_kms_key" "artifacts" {
 }
 
 resource "aws_iam_role" "codepipeline_role" {
-  name = "test-role"
+  name = "${var.prefix_name}-${var.service_name}-codepipeline-role"
 
   assume_role_policy = <<EOF
 {
@@ -91,7 +91,7 @@ EOF
 }
 
 resource "aws_codepipeline" "codepipeline" {
-  name     = var.service_name
+  name     = "${var.prefix_name}-${var.service_name}-pipeline"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
@@ -213,7 +213,7 @@ resource "aws_codepipeline" "codepipeline" {
 }
 
 resource "aws_iam_role" "codebuild" {
-  name = "${var.prefix_name}-codebuild-${var.service_name}"
+  name = "${var.prefix_name}-${var.service_name}-codebuild-role"
 
   assume_role_policy = <<EOF
 {
@@ -232,50 +232,23 @@ EOF
 }
 
 resource "aws_iam_role_policy" "codebuild" {
-  role = aws_iam_role.codebuild.name
-
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Resource": ["*"],
-      "Action": [
-        "logs:*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:*",
-        "codebuild:*",
-        "kms:*",
-        "ssm:*"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:*"
-      ],
-      "Resource": [
-        "*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": "sts:AssumeRole",
-      "Resource": "${var.dev_assume_role_arn}"
-    }
-  ]
+  role   = aws_iam_role.codebuild.name
+  policy = data.aws_iam_policy_document.codebuild.json
 }
-POLICY
+
+data "aws_iam_policy_document" "codebuild" {
+  statement {
+    actions   = ["sts:AssumeRole"]
+    resources = [var.dev_assume_role_arn]
+  }
+  statement {
+    actions   = ["ec2:*", "codebuild:*", "kms:*", "ssm:*", "s3:*", "logs:*"]
+    resources = ["*"]
+  }
 }
 
 resource "aws_codebuild_project" "development" {
-  name          = "development"
+  name          = "${var.prefix_name}-${var.service_name}-development"
   description   = "Development"
   build_timeout = "5"
   service_role  = aws_iam_role.codebuild.arn
@@ -309,7 +282,7 @@ resource "aws_codebuild_project" "development" {
 }
 
 resource "aws_codebuild_project" "staging" {
-  name          = "staging"
+  name          = "${var.prefix_name}-${var.service_name}-staging"
   description   = "Staging"
   build_timeout = "5"
   service_role  = aws_iam_role.codebuild.arn
@@ -343,7 +316,7 @@ resource "aws_codebuild_project" "staging" {
 }
 
 resource "aws_codebuild_project" "lint" {
-  name          = "lint"
+  name          = "${var.prefix_name}-${var.service_name}-lint"
   description   = "Lint"
   build_timeout = "5"
   service_role  = aws_iam_role.codebuild.arn
@@ -378,7 +351,7 @@ resource "aws_codebuild_project" "lint" {
 }
 
 resource "aws_codebuild_project" "production" {
-  name          = "production"
+  name          = "${var.prefix_name}-${var.service_name}-production"
   description   = "Production"
   build_timeout = "5"
   service_role  = aws_iam_role.codebuild.arn
