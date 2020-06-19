@@ -125,10 +125,6 @@ resource "aws_codepipeline" "codepipeline" {
     }
   }
 
-  lifecycle {
-    ignore_changes = [stage[0].action[0].configuration] //workarround for OAuthToken drift https://github.com/terraform-providers/terraform-provider-aws/issues/2854
-  }
-
   stage {
     name = "Lint"
 
@@ -179,7 +175,6 @@ resource "aws_codepipeline" "codepipeline" {
       }
     }
   }
-
 
   stage {
     name = "Production"
@@ -239,13 +234,14 @@ resource "aws_iam_role_policy" "codebuild" {
 data "aws_iam_policy_document" "codebuild" {
   statement {
     actions   = ["sts:AssumeRole"]
-    resources = [var.dev_assume_role_arn]
+    resources = [var.dev_assume_role_arn, var.pre_production_assume_role_arn]
   }
   statement {
     actions   = ["ec2:*", "codebuild:*", "kms:*", "ssm:*", "s3:*", "logs:*"]
     resources = ["*"]
   }
 }
+
 
 resource "aws_codebuild_project" "development" {
   name          = "${var.prefix_name}-${var.service_name}-development"
@@ -278,6 +274,7 @@ resource "aws_codebuild_project" "development" {
 
   source {
     type = "CODEPIPELINE"
+    buildspec = "buildspec.development.yml"
   }
 }
 
@@ -312,6 +309,7 @@ resource "aws_codebuild_project" "staging" {
 
   source {
     type = "CODEPIPELINE"
+    buildspec = "buildspec.pre-production.yml"
   }
 }
 
@@ -383,3 +381,4 @@ resource "aws_codebuild_project" "production" {
     type = "CODEPIPELINE"
   }
 }
+

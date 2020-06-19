@@ -29,3 +29,7 @@ variable "service_name" {
 variable "dev_assume_role_arn" {
   type = string
 }
+
+variable "pre_production_assume_role_arn" {
+  type = string
+}
