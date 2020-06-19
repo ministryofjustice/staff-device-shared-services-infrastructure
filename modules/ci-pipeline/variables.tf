@@ -6,11 +6,11 @@ variable "subnet_ids" {
   type = list(string)
 }
 
-variable github_repo_name {
+variable "github_repo_name" {
   type = string
 }
 
-variable github_organisation_name {
+variable "github_organisation_name" {
   type = string
 }
 
