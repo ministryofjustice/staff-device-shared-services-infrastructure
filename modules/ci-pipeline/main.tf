@@ -119,7 +119,7 @@ resource "aws_codepipeline" "codepipeline" {
         OAuthToken           = var.github_oauth_token //https://github.com/terraform-providers/terraform-provider-aws/issues/2854
         Owner                = var.github_organisation_name
         Repo                 = var.github_repo_name
-        Branch               = "master"
+        Branch               = "bootstrap"
         PollForSourceChanges = "true"
       }
     }
@@ -260,8 +260,13 @@ resource "aws_codebuild_project" "development" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "FOO"
-      value = "BAR"
+      name  = "ASSUME_ROLE_ARN"
+      value = var.dev_assume_role_arn
+    }
+
+    environment_variable {
+      name = "ENV"
+      value = "development"
     }
   }
 
@@ -274,7 +279,6 @@ resource "aws_codebuild_project" "development" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "buildspec.development.yml"
   }
 }
 
@@ -295,8 +299,13 @@ resource "aws_codebuild_project" "staging" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "FOO"
-      value = "BAR"
+      name  = "ASSUME_ROLE_ARN"
+      value = var.pre_production_assume_role_arn
+    }
+
+    environment_variable {
+      name = "ENV"
+      value = "pre-production"
     }
   }
 
@@ -328,11 +337,6 @@ resource "aws_codebuild_project" "lint" {
     image                       = "aws/codebuild/standard:1.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
-
-    environment_variable {
-      name  = "FOO"
-      value = "BAR"
-    }
   }
 
   logs_config {
@@ -365,8 +369,13 @@ resource "aws_codebuild_project" "production" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "FOO"
-      value = "BAR"
+      name  = "ASSUME_ROLE_ARN"
+      value = var.production_assume_role_arn
+    }
+
+    environment_variable {
+      name = "ENV"
+      value = "production"
     }
   }
 
@@ -381,4 +390,3 @@ resource "aws_codebuild_project" "production" {
     type = "CODEPIPELINE"
   }
 }
-
