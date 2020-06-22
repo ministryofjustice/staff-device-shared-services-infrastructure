@@ -73,7 +73,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
       "Resource": [
         "${aws_codebuild_project.lint.id}",
         "${aws_codebuild_project.development.id}",
-        "${aws_codebuild_project.staging.id}",
+        "${aws_codebuild_project.pre-production.id}",
         "${aws_codebuild_project.production.id}"
       ]
     },
@@ -159,7 +159,7 @@ resource "aws_codepipeline" "codepipeline" {
   }
 
   stage {
-    name = "Staging"
+    name = "Pre_Production"
 
     action {
       name            = "Deploy"
@@ -170,7 +170,7 @@ resource "aws_codepipeline" "codepipeline" {
       version         = "1"
 
       configuration = {
-        ProjectName = aws_codebuild_project.staging.name
+        ProjectName = aws_codebuild_project.pre-production.name
       }
     }
   }
@@ -242,6 +242,11 @@ data "aws_iam_policy_document" "codebuild" {
 }
 
 
+locals {
+  log_group_name  = "${var.prefix_name}-log-group-${var.service_name}"
+  log_stream_name = "${var.prefix_name}-log-streem-${var.service_name}"
+}
+
 resource "aws_codebuild_project" "development" {
   name          = "${var.prefix_name}-${var.service_name}-development"
   description   = "Development"
@@ -264,26 +269,26 @@ resource "aws_codebuild_project" "development" {
     }
 
     environment_variable {
-      name = "ENV"
+      name  = "ENV"
       value = "development"
     }
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "${var.prefix_name}-log-group-development-${var.service_name}"
-      stream_name = "${var.prefix_name}-log-stream-development-${var.service_name}"
+      group_name  = local.log_group_name
+      stream_name = local.log_stream_name
     }
   }
 
   source {
-    type      = "CODEPIPELINE"
+    type = "CODEPIPELINE"
   }
 }
 
-resource "aws_codebuild_project" "staging" {
-  name          = "${var.prefix_name}-${var.service_name}-staging"
-  description   = "Staging"
+resource "aws_codebuild_project" "pre-production" {
+  name          = "${var.prefix_name}-${var.service_name}-pre-production"
+  description   = "Pre Production"
   build_timeout = "5"
   service_role  = aws_iam_role.codebuild.arn
 
@@ -303,20 +308,20 @@ resource "aws_codebuild_project" "staging" {
     }
 
     environment_variable {
-      name = "ENV"
+      name  = "ENV"
       value = "pre-production"
     }
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "${var.prefix_name}-log-group-staging-${var.service_name}"
-      stream_name = "${var.prefix_name}-log-stream-staging-${var.service_name}"
+      group_name  = local.log_group_name
+      stream_name = local.log_stream_name
     }
   }
 
   source {
-    type      = "CODEPIPELINE"
+    type = "CODEPIPELINE"
   }
 }
 
@@ -339,8 +344,8 @@ resource "aws_codebuild_project" "lint" {
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "${var.prefix_name}-log-group-lint-${var.service_name}"
-      stream_name = "${var.prefix_name}-log-stream-lint-${var.service_name}"
+      group_name  = local.log_group_name
+      stream_name = local.log_stream_name
     }
   }
 
@@ -372,15 +377,15 @@ resource "aws_codebuild_project" "production" {
     }
 
     environment_variable {
-      name = "ENV"
+      name  = "ENV"
       value = "production"
     }
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "${var.prefix_name}-log-group-production-${var.service_name}"
-      stream_name = "${var.prefix_name}-log-stream-production-${var.service_name}"
+      group_name  = local.log_group_name
+      stream_name = local.log_stream_name
     }
   }
 
