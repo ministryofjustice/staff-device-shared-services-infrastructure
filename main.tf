@@ -71,7 +71,6 @@ module "pttp-infrastructure-ci-pipeline" {
   service_name             = "pttp-infrastructure"
   github_organisation_name = "ministryofjustice"
   github_repo_name         = "pttp-infrastructure"
-  github_oauth_token       = var.github_oauth_token
 
   prefix_name                    = module.label.id
   vpc_id                         = module.vpc.vpc_id

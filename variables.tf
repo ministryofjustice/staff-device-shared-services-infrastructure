@@ -1,7 +1,3 @@
-variable "github_oauth_token" {
-  type = string
-}
-
 variable "is-production" {
   type    = bool
   default = "true"

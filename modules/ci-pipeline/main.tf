@@ -116,11 +116,10 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        OAuthToken           = var.github_oauth_token //https://github.com/terraform-providers/terraform-provider-aws/issues/2854
         Owner                = var.github_organisation_name
         Repo                 = var.github_repo_name
-        Branch               = "bootstrap"
-        PollForSourceChanges = "true"
+        Branch               = "master"
+        PollForSourceChanges = "false"
       }
     }
   }
