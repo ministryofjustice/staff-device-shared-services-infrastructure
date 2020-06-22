@@ -234,7 +234,7 @@ resource "aws_iam_role_policy" "codebuild" {
 data "aws_iam_policy_document" "codebuild" {
   statement {
     actions   = ["sts:AssumeRole"]
-    resources = [var.dev_assume_role_arn, var.pre_production_assume_role_arn]
+    resources = [var.dev_assume_role_arn, var.pre_production_assume_role_arn, var.production_assume_role_arn]
   }
   statement {
     actions   = ["ec2:*", "codebuild:*", "kms:*", "ssm:*", "s3:*", "logs:*"]
@@ -318,7 +318,6 @@ resource "aws_codebuild_project" "staging" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "buildspec.pre-production.yml"
   }
 }
 

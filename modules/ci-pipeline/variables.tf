@@ -33,3 +33,7 @@ variable "dev_assume_role_arn" {
 variable "pre_production_assume_role_arn" {
   type = string
 }
+
+variable "production_assume_role_arn" {
+  type = string
+}

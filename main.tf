@@ -78,4 +78,5 @@ module "pttp-infrastructure-ci-pipeline" {
   subnet_ids                     = module.vpc.private_subnets
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
+  production_assume_role_arn = var.production_assume_role_arn
 }
