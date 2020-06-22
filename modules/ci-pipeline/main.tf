@@ -71,7 +71,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         "ssm:*"
       ],
       "Resource": [
-        "${aws_codebuild_project.lint.id}",
+        "${aws_codebuild_project.test.id}",
         "${aws_codebuild_project.development.id}",
         "${aws_codebuild_project.pre-production.id}",
         "${aws_codebuild_project.production.id}"
@@ -88,6 +88,10 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
   ]
 }
 EOF
+}
+
+data "aws_ssm_parameter" "github_oauth_token" {
+  name = "/ci/github-oauth-token"
 }
 
 resource "aws_codepipeline" "codepipeline" {
@@ -116,19 +120,20 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["source_output"]
 
       configuration = {
+        OAuthToken           = data.aws_ssm_parameter.github_oauth_token.value
         Owner                = var.github_organisation_name
         Repo                 = var.github_repo_name
         Branch               = "master"
-        PollForSourceChanges = "false"
+        PollForSourceChanges = "true"
       }
     }
   }
 
   stage {
-    name = "Lint"
+    name = "Test"
 
     action {
-      name            = "Lint"
+      name            = "Test"
       category        = "Build"
       owner           = "AWS"
       provider        = "CodeBuild"
@@ -136,7 +141,7 @@ resource "aws_codepipeline" "codepipeline" {
       version         = "1"
 
       configuration = {
-        ProjectName = aws_codebuild_project.lint.name
+        ProjectName = aws_codebuild_project.test.name
       }
     }
   }
@@ -206,41 +211,24 @@ resource "aws_codepipeline" "codepipeline" {
   }
 }
 
-resource "aws_iam_role" "codebuild" {
-  name = "${var.prefix_name}-${var.service_name}-codebuild-role"
+module "assume-role-dev" {
+  source           = "../ci-assume-role"
+  account_role_arn = var.dev_assume_role_arn
+  prefix_name      = "${var.prefix_name}-${var.service_name}-dev"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codebuild.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
 }
 
-resource "aws_iam_role_policy" "codebuild" {
-  role   = aws_iam_role.codebuild.name
-  policy = data.aws_iam_policy_document.codebuild.json
+module "assume-role-pre-production" {
+  source           = "../ci-assume-role"
+  account_role_arn = var.pre_production_assume_role_arn
+  prefix_name      = "${var.prefix_name}-${var.service_name}-pre-production"
 }
 
-data "aws_iam_policy_document" "codebuild" {
-  statement {
-    actions   = ["sts:AssumeRole"]
-    resources = [var.dev_assume_role_arn, var.pre_production_assume_role_arn, var.production_assume_role_arn]
-  }
-  statement {
-    actions   = ["ec2:*", "codebuild:*", "kms:*", "ssm:*", "s3:*", "logs:*"]
-    resources = ["*"]
-  }
+module "ci-assume-role-production" {
+  source           = "../ci-assume-role"
+  account_role_arn = var.production_assume_role_arn
+  prefix_name      = "${var.prefix_name}-${var.service_name}-production"
 }
-
 
 locals {
   log_group_name  = "${var.prefix_name}-log-group-${var.service_name}"
@@ -251,7 +239,7 @@ resource "aws_codebuild_project" "development" {
   name          = "${var.prefix_name}-${var.service_name}-development"
   description   = "Development"
   build_timeout = "5"
-  service_role  = aws_iam_role.codebuild.arn
+  service_role  = module.assume-role-dev.arn
 
   artifacts {
     type = "CODEPIPELINE"
@@ -290,7 +278,7 @@ resource "aws_codebuild_project" "pre-production" {
   name          = "${var.prefix_name}-${var.service_name}-pre-production"
   description   = "Pre Production"
   build_timeout = "5"
-  service_role  = aws_iam_role.codebuild.arn
+  service_role  = module.assume-role-pre-production.arn
 
   artifacts {
     type = "CODEPIPELINE"
@@ -325,11 +313,11 @@ resource "aws_codebuild_project" "pre-production" {
   }
 }
 
-resource "aws_codebuild_project" "lint" {
-  name          = "${var.prefix_name}-${var.service_name}-lint"
-  description   = "Lint"
+resource "aws_codebuild_project" "test" {
+  name          = "${var.prefix_name}-${var.service_name}-test"
+  description   = "Test"
   build_timeout = "5"
-  service_role  = aws_iam_role.codebuild.arn
+  service_role  = module.assume-role-dev.arn
 
   artifacts {
     type = "CODEPIPELINE"
@@ -351,7 +339,7 @@ resource "aws_codebuild_project" "lint" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = "buildspec.lint.yml"
+    buildspec = "buildspec.test.yml"
   }
 }
 
@@ -359,7 +347,7 @@ resource "aws_codebuild_project" "production" {
   name          = "${var.prefix_name}-${var.service_name}-production"
   description   = "Production"
   build_timeout = "5"
-  service_role  = aws_iam_role.codebuild.arn
+  service_role  = module.ci-assume-role-production.arn
 
   artifacts {
     type = "CODEPIPELINE"
