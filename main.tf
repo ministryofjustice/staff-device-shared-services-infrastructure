@@ -73,9 +73,9 @@ module "pttp-infrastructure-ci-pipeline" {
   github_repo_name         = "pttp-infrastructure"
   github_oauth_token       = var.github_oauth_token
 
-  prefix_name         = module.label.id
-  vpc_id              = module.vpc.vpc_id
-  subnet_ids          = module.vpc.private_subnets
-  dev_assume_role_arn = var.dev_assume_role_arn
+  prefix_name                    = module.label.id
+  vpc_id                         = module.vpc.vpc_id
+  subnet_ids                     = module.vpc.private_subnets
+  dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
 }

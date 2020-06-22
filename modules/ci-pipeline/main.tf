@@ -273,7 +273,7 @@ resource "aws_codebuild_project" "development" {
   }
 
   source {
-    type = "CODEPIPELINE"
+    type      = "CODEPIPELINE"
     buildspec = "buildspec.development.yml"
   }
 }
@@ -308,7 +308,7 @@ resource "aws_codebuild_project" "staging" {
   }
 
   source {
-    type = "CODEPIPELINE"
+    type      = "CODEPIPELINE"
     buildspec = "buildspec.pre-production.yml"
   }
 }
