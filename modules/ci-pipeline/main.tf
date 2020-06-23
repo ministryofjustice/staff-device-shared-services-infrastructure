@@ -238,7 +238,7 @@ locals {
 resource "aws_codebuild_project" "development" {
   name          = "${var.prefix_name}-${var.service_name}-development"
   description   = "Development"
-  build_timeout = "5"
+  build_timeout = 60
   service_role  = module.assume-role-dev.arn
 
   artifacts {
@@ -277,7 +277,7 @@ resource "aws_codebuild_project" "development" {
 resource "aws_codebuild_project" "pre-production" {
   name          = "${var.prefix_name}-${var.service_name}-pre-production"
   description   = "Pre Production"
-  build_timeout = "5"
+  build_timeout = 60
   service_role  = module.assume-role-pre-production.arn
 
   artifacts {
@@ -316,7 +316,7 @@ resource "aws_codebuild_project" "pre-production" {
 resource "aws_codebuild_project" "test" {
   name          = "${var.prefix_name}-${var.service_name}-test"
   description   = "Test"
-  build_timeout = "5"
+  build_timeout = 60
   service_role  = module.assume-role-dev.arn
 
   artifacts {
@@ -346,7 +346,7 @@ resource "aws_codebuild_project" "test" {
 resource "aws_codebuild_project" "production" {
   name          = "${var.prefix_name}-${var.service_name}-production"
   description   = "Production"
-  build_timeout = "5"
+  build_timeout = 60
   service_role  = module.ci-assume-role-production.arn
 
   artifacts {
