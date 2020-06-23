@@ -33,3 +33,8 @@ variable "pre_production_assume_role_arn" {
 variable "production_assume_role_arn" {
   type = string
 }
+
+variable docker_image {
+  type    = string
+  default = "aws/codebuild/standard:4.0"
+}
