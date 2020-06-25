@@ -13,6 +13,18 @@ resource "aws_s3_bucket" "artifacts" {
   }
 }
 
+resource "aws_dynamodb_table" "dynamodb_terraform_state_lock" {
+  name           = "${var.prefix_name}-client-${var.service_name}-tf-lock-table"
+  hash_key       = "LockID"
+  read_capacity  = 20
+  write_capacity = 20
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+}
+
 resource "aws_s3_bucket" "client-tf-state" {
   bucket        = "${var.prefix_name}-client-${var.service_name}-tf-state"
   acl           = "private"
@@ -212,22 +224,24 @@ resource "aws_codepipeline" "codepipeline" {
 }
 
 module "assume-role-dev" {
-  source           = "../ci-assume-role"
-  account_role_arn = var.dev_assume_role_arn
-  prefix_name      = "${var.prefix_name}-${var.service_name}-dev"
-
+  source                = "../ci-assume-role"
+  account_role_arn      = var.dev_assume_role_arn
+  prefix_name           = "${var.prefix_name}-${var.service_name}-dev"
+  dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
 }
 
 module "assume-role-pre-production" {
-  source           = "../ci-assume-role"
-  account_role_arn = var.pre_production_assume_role_arn
-  prefix_name      = "${var.prefix_name}-${var.service_name}-pre-production"
+  source                = "../ci-assume-role"
+  account_role_arn      = var.pre_production_assume_role_arn
+  prefix_name           = "${var.prefix_name}-${var.service_name}-pre-production"
+  dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
 }
 
 module "ci-assume-role-production" {
-  source           = "../ci-assume-role"
-  account_role_arn = var.production_assume_role_arn
-  prefix_name      = "${var.prefix_name}-${var.service_name}-production"
+  source                = "../ci-assume-role"
+  account_role_arn      = var.production_assume_role_arn
+  prefix_name           = "${var.prefix_name}-${var.service_name}-production"
+  dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
 }
 
 locals {
