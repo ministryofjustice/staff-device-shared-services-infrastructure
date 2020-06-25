@@ -28,11 +28,15 @@ data "aws_iam_policy_document" "this" {
     resources = [var.account_role_arn]
   }
   statement {
-    actions   = ["ec2:*", "codebuild:*", "kms:*", "ssm:*", "s3:*"]
+    actions   = ["codebuild:*", "kms:*", "ssm:*", "s3:*"]
     resources = ["*"]
   }
   statement {
-    actions   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:DeleteItem"]
+    actions = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:DeleteItem"
+    ]
     resources = [var.dynamo_db_locking_arn]
   }
   statement {
@@ -40,6 +44,19 @@ data "aws_iam_policy_document" "this" {
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    actions = [
+      "ec2:CreateNetworkInterface",
+      "ec2:DescribeDhcpOptions",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DeleteNetworkInterface",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeVpcs",
+      "ec2:CreateNetworkInterfacePermission"
     ]
     resources = ["*"]
   }
