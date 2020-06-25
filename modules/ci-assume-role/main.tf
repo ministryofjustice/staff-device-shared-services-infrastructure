@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "this" {
     resources = [var.account_role_arn]
   }
   statement {
-    actions   = ["codebuild:*", "kms:*", "ssm:*", "s3:*"]
+    actions   = ["codebuild:*", "kms:*", "ssm:*"]
     resources = ["*"]
   }
   statement {
@@ -59,5 +59,12 @@ data "aws_iam_policy_document" "this" {
       "ec2:CreateNetworkInterfacePermission"
     ]
     resources = ["*"]
+  }
+
+  statement {
+    actions = [
+      "s3:*"
+    ]
+    resources = formatlist("%s/*", var.s3_bucket_arns)
   }
 }

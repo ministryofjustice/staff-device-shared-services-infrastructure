@@ -7,3 +7,6 @@ variable "prefix_name" {
 variable "dynamo_db_locking_arn" {
   type = string
 }
+variable "s3_bucket_arns" {
+  type = list(string)
+}

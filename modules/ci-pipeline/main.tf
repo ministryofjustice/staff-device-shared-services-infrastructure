@@ -223,11 +223,19 @@ resource "aws_codepipeline" "codepipeline" {
   }
 }
 
+locals {
+  s3_bucket_arns = [
+    aws_s3_bucket.artifacts.arn,
+    aws_s3_bucket.client-tf-state.arn
+  ]
+}
+
 module "assume-role-dev" {
   source                = "../ci-assume-role"
   account_role_arn      = var.dev_assume_role_arn
   prefix_name           = "${var.prefix_name}-${var.service_name}-dev"
   dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
+  s3_bucket_arns        = local.s3_bucket_arns
 }
 
 module "assume-role-pre-production" {
@@ -235,6 +243,7 @@ module "assume-role-pre-production" {
   account_role_arn      = var.pre_production_assume_role_arn
   prefix_name           = "${var.prefix_name}-${var.service_name}-pre-production"
   dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
+  s3_bucket_arns        = local.s3_bucket_arns
 }
 
 module "ci-assume-role-production" {
@@ -242,6 +251,7 @@ module "ci-assume-role-production" {
   account_role_arn      = var.production_assume_role_arn
   prefix_name           = "${var.prefix_name}-${var.service_name}-production"
   dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
+  s3_bucket_arns        = local.s3_bucket_arns
 }
 
 locals {
