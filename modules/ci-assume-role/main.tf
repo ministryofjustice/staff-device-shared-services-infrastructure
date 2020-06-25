@@ -28,7 +28,17 @@ data "aws_iam_policy_document" "this" {
     resources = [var.account_role_arn]
   }
   statement {
-    actions   = ["kms:*", "ssm:*"]
+    actions   = ["ssm:*"]
+    resources = ["*"]
+  }
+  statement {
+    actions = [
+      "kms:Decrypt",
+      "kms:DescribeKey",
+      "kms:Encrypt",
+      "kms:GenerateDataKey*",
+      "kms:ReEncrypt*"
+    ]
     resources = ["*"]
   }
   statement {
