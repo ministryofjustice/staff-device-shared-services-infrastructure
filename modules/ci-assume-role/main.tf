@@ -28,11 +28,19 @@ data "aws_iam_policy_document" "this" {
     resources = [var.account_role_arn]
   }
   statement {
-    actions   = ["ec2:*", "codebuild:*", "kms:*", "ssm:*", "s3:*", "logs:*"]
+    actions   = ["ec2:*", "codebuild:*", "kms:*", "ssm:*", "s3:*"]
     resources = ["*"]
   }
   statement {
     actions   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:DeleteItem"]
     resources = [var.dynamo_db_locking_arn]
+  }
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+    resources = ["*"]
   }
 }
