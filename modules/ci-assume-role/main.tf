@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "this" {
     resources = [var.account_role_arn]
   }
   statement {
-    actions   = ["codebuild:*", "kms:*", "ssm:*"]
+    actions   = ["kms:*", "ssm:*"]
     resources = ["*"]
   }
   statement {
