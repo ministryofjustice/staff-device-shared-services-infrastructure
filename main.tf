@@ -79,4 +79,6 @@ module "pttp-infrastructure-ci-pipeline" {
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
+  ost_vpc_id                     = var.ost_vpc_id
+  ost_aws_account_id             = var.ost_aws_account_id
 }
