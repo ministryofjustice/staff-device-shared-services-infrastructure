@@ -81,4 +81,5 @@ module "pttp-infrastructure-ci-pipeline" {
   production_assume_role_arn     = var.production_assume_role_arn
   ost_vpc_id                     = var.ost_vpc_id
   ost_aws_account_id             = var.ost_aws_account_id
+  ost_vpc_cidr_block             = var.ost_vpc_cidr_block
 }
