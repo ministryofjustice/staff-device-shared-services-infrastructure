@@ -307,28 +307,8 @@ resource "aws_codebuild_project" "development" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "ASSUME_ROLE_ARN"
-      value = var.dev_assume_role_arn
-    }
-
-    environment_variable {
       name  = "ENV"
       value = "development"
-    }
-
-    environment_variable {
-      name  = "OST_VPC_ID"
-      value = var.ost_vpc_id
-    }
-
-    environment_variable {
-      name  = "OST_AWS_ACCOUNT_ID"
-      value = var.ost_aws_account_id
-    }
-
-    environment_variable {
-      name  = "OST_VPC_CIDR_BLOCK"
-      value = var.ost_vpc_cidr_block
     }
   }
 
@@ -361,28 +341,8 @@ resource "aws_codebuild_project" "pre-production" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "ASSUME_ROLE_ARN"
-      value = var.pre_production_assume_role_arn
-    }
-
-    environment_variable {
       name  = "ENV"
       value = "pre-production"
-    }
-
-    environment_variable {
-      name  = "OST_VPC_ID"
-      value = var.ost_vpc_id
-    }
-
-    environment_variable {
-      name  = "OST_AWS_ACCOUNT_ID"
-      value = var.ost_aws_account_id
-    }
-
-    environment_variable {
-      name  = "OST_VPC_CIDR_BLOCK"
-      value = var.ost_vpc_cidr_block
     }
   }
 
@@ -445,29 +405,10 @@ resource "aws_codebuild_project" "production" {
     image_pull_credentials_type = "CODEBUILD"
 
     environment_variable {
-      name  = "ASSUME_ROLE_ARN"
-      value = var.production_assume_role_arn
-    }
-
-    environment_variable {
       name  = "ENV"
       value = "production"
     }
 
-    environment_variable {
-      name  = "OST_VPC_ID"
-      value = var.ost_vpc_id
-    }
-
-    environment_variable {
-      name  = "OST_AWS_ACCOUNT_ID"
-      value = var.ost_aws_account_id
-    }
-
-    environment_variable {
-      name  = "OST_VPC_CIDR_BLOCK"
-      value = var.ost_vpc_cidr_block
-    }
   }
 
   logs_config {

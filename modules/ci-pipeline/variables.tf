@@ -38,15 +38,3 @@ variable docker_image {
   type    = string
   default = "aws/codebuild/standard:4.0"
 }
-
-variable "ost_vpc_id" {
-  type = string
-}
-
-variable "ost_aws_account_id" {
-  type = string
-}
-
-variable "ost_vpc_cidr_block" {
-  type = string
-}
