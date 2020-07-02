@@ -227,19 +227,6 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Production"
 
     action {
-      name     = "Approve"
-      owner    = "AWS"
-      category = "Approval"
-      provider = "Manual"
-      version  = "1"
-
-      configuration = {
-        CustomData = "Deploy to Production?"
-      }
-      run_order = 1
-    }
-
-    action {
       name            = "Deploy"
       category        = "Build"
       owner           = "AWS"
