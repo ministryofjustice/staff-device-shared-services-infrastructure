@@ -80,4 +80,14 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = formatlist("%s/*", var.s3_bucket_arns)
   }
+
+  statement {
+    actions = [
+      "codebuild:CreateReportGroup",
+      "codebuild:CreateReport",
+      "codebuild:UpdateReport",
+      "codebuild:BatchPutTestCases"
+    ]
+    resources = ["*"]
+  }
 }
