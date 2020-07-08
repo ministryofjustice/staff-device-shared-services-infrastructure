@@ -355,6 +355,11 @@ resource "aws_codebuild_project" "test" {
     type = "CODEPIPELINE"
   }
 
+  cache {
+    type  = "LOCAL"
+    modes = ["LOCAL_CUSTOM_CACHE"]
+  }
+
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = var.docker_image
