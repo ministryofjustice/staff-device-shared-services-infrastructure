@@ -80,3 +80,9 @@ module "pttp-infrastructure-ci-pipeline" {
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
 }
+
+module "log-forward" {
+  source = "./modules/log-forwarding"
+  destination_arn = var.kinesis_destination_arn
+  prefix_name = module.label.id
+}

@@ -19,3 +19,7 @@ variable "pre_production_assume_role_arn" {
 variable "production_assume_role_arn" {
   type = string
 }
+
+variable "kinesis_destination_arn" {
+  type = string
+}
