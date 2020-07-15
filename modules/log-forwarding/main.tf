@@ -39,3 +39,17 @@ resource "aws_cloudwatch_log_subscription_filter" "cloud_watch_forward_subscript
   filter_pattern  = ""
   destination_arn = var.destination_arn
 }
+
+resource "aws_cloudwatch_log_subscription_filter" "cloud_watch_forward_subscription_filter_cloudtrail" {
+  name            = "cloud-watch-forward-subscription-filter-cloudtrail-log-group"
+  log_group_name  = "pttp-ci-infrastructure-cloudtrail-log-group"
+  filter_pattern  = ""
+  destination_arn = var.destination_arn
+}
+
+resource "aws_cloudwatch_log_subscription_filter" "cloud_watch_forward_subscription_filter_vpc_flow_logs" {
+  name            = "cloud-watch-forward-subscription-filter-vpc-flow-logs-log-group"
+  log_group_name  = "pttp-ci-infrastructure-vpc-flow-logs-log-group"
+  filter_pattern  = ""
+  destination_arn = var.destination_arn
+}
