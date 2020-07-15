@@ -82,7 +82,23 @@ module "pttp-infrastructure-ci-pipeline" {
 }
 
 module "log-forward" {
-  source = "./modules/log-forwarding"
+  source          = "./modules/log-forwarding"
   destination_arn = var.kinesis_destination_arn
-  prefix_name = module.label.id
+  prefix_name     = module.label.id
+}
+
+module "cloudtrail" {
+  source                                       = "./modules/cloudtrail"
+  enable_cloudtrail_log_shipping_to_cloudwatch = var.enable_cloudtrail_log_shipping_to_cloudwatch
+  prefix                                       = module.label.id
+  region                                       = data.aws_region.current_region.id
+  tags                                         = module.label.tags
+}
+
+module "vpc_flow_logs" {
+  source = "./modules/vpc_flow_logs"
+  prefix = module.label.id
+  region = data.aws_region.current_region.id
+  tags   = module.label.tags
+  vpc_id = module.vpc.vpc_id
 }

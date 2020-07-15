@@ -23,3 +23,7 @@ variable "production_assume_role_arn" {
 variable "kinesis_destination_arn" {
   type = string
 }
+
+variable "enable_cloudtrail_log_shipping_to_cloudwatch" {
+  type = bool
+}
