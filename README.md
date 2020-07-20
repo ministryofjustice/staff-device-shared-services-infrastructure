@@ -87,17 +87,8 @@ Create an access token for your repository and add it to a `.tfvars` file in the
 github_oauth_token = "abc123"
 ```
 
-Run Terraform with the variables file:
+Run Terraform 
 
 ```shell script
-terraform apply -var-file=".tfvars"
-```
-
-## Log retention periods
-
-To ensure that we are not keeping CloudWatch logs for longer than we need, we set the retention period to 7 days. 
-
-Run: 
-```shell script
-./scripts/ensure_cloudwatch_log_retention_policies.sh
+make apply
 ```
