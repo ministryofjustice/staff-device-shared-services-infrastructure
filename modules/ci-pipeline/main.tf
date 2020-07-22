@@ -244,7 +244,8 @@ resource "aws_codepipeline" "codepipeline" {
 locals {
   s3_bucket_arns = [
     aws_s3_bucket.artifacts.arn,
-    aws_s3_bucket.client-tf-state.arn
+    aws_s3_bucket.client-tf-state.arn,
+    aws_s3_bucket.dns_dhcp_artifacts.arn
   ]
 }
 
