@@ -67,10 +67,11 @@ module "label" {
 }
 
 module "pttp-infrastructure-ci-pipeline" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "pttp-infrastructure"
+  source                    = "./modules/ci-pipeline"
+  service_name              = "core"
+  github_organisation_name  = "ministryofjustice"
+  github_repo_name          = "pttp-infrastructure"
+  dns_dhcp_github_repo_name = "staff-device-dhcp-dns"
 
   prefix_name = module.label.id
   vpc_id      = module.vpc.vpc_id

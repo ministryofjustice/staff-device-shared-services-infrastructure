@@ -14,6 +14,10 @@ variable "github_organisation_name" {
   type = string
 }
 
+variable "dns_dhcp_github_repo_name" {
+  type = string
+}
+
 variable "prefix_name" {
   type = string
 }
