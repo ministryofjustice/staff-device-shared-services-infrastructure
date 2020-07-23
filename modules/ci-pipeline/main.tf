@@ -13,6 +13,25 @@ resource "aws_s3_bucket" "artifacts" {
   }
 }
 
+resource "aws_s3_bucket" "client-tf-state" {
+  bucket        = "${var.prefix_name}-client-${var.service_name}-tf-state"
+  acl           = "private"
+  force_destroy = false
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        kms_master_key_id = aws_kms_key.artifacts.arn
+        sse_algorithm     = "aws:kms"
+      }
+    }
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 resource "aws_s3_bucket_public_access_block" "artifacts" {
   bucket = aws_s3_bucket.artifacts.bucket
 
@@ -34,24 +53,7 @@ resource "aws_dynamodb_table" "dynamodb_terraform_state_lock" {
   }
 }
 
-resource "aws_s3_bucket" "client-tf-state" {
-  bucket        = "${var.prefix_name}-client-${var.service_name}-tf-state"
-  acl           = "private"
-  force_destroy = false
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = aws_kms_key.artifacts.arn
-        sse_algorithm     = "aws:kms"
-      }
-    }
-  }
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
 
 resource "aws_s3_bucket_public_access_block" "client-tf-state" {
   bucket = aws_s3_bucket.client-tf-state.bucket
@@ -166,7 +168,7 @@ resource "aws_codepipeline" "codepipeline" {
         OAuthToken           = data.aws_ssm_parameter.github_oauth_token.value
         Owner                = var.github_organisation_name
         Repo                 = var.github_repo_name
-        Branch               = "master"
+        Branch               = var.git_branch_name
         PollForSourceChanges = "true"
       }
     }
@@ -244,8 +246,7 @@ resource "aws_codepipeline" "codepipeline" {
 locals {
   s3_bucket_arns = [
     aws_s3_bucket.artifacts.arn,
-    aws_s3_bucket.client-tf-state.arn,
-    aws_s3_bucket.dns_dhcp_artifacts.arn
+    aws_s3_bucket.client-tf-state.arn
   ]
 }
 
@@ -260,7 +261,7 @@ module "assume-role-dev" {
 module "assume-role-pre-production" {
   source                = "../ci-assume-role"
   account_role_arn      = var.pre_production_assume_role_arn
-  prefix_name           = "${var.prefix_name}-${var.service_name}-pre-production"
+  prefix_name           = "${var.prefix_name}-${var.service_name}-pre-prod"
   dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
   s3_bucket_arns        = local.s3_bucket_arns
 }

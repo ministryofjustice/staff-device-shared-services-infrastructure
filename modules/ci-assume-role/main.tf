@@ -80,9 +80,14 @@ data "aws_iam_policy_document" "this" {
 
   statement {
     actions = [
-      "s3:*"
+      "s3:HeadBucket",
+      "s3:ListBucket",
+      "s3:GetObject",
+      "s3:GetObjectVersion",
+      "s3:GetBucketVersioning",
+      "s3:PutObject"
     ]
-    resources = formatlist("%s/*", var.s3_bucket_arns)
+    resources = formatlist("%s*", var.s3_bucket_arns)
   }
 
   statement {

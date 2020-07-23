@@ -14,7 +14,7 @@ variable "github_organisation_name" {
   type = string
 }
 
-variable "dns_dhcp_github_repo_name" {
+variable "git_branch_name" {
   type = string
 }
 
