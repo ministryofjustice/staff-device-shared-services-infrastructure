@@ -86,7 +86,7 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp" {
   source                   = "./modules/ci-pipeline"
   service_name             = "core"
   github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-device-dhcp-dns"
+  github_repo_name         = "staff-device-dns-dhcp-infrastructure"
   git_branch_name          = "main"
 
   prefix_name = "${module.label.id}-dns-dhcp"
