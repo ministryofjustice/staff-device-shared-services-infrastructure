@@ -80,6 +80,18 @@ data "aws_iam_policy_document" "this" {
 
   statement {
     actions = [
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:CompleteLayerUpload",
+      "ecr:GetAuthorizationToken",
+      "ecr:InitiateLayerUpload",
+      "ecr:PutImage",
+      "ecr:UploadLayerPart"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    actions = [
       "s3:HeadBucket",
       "s3:ListBucket",
       "s3:GetObject",
