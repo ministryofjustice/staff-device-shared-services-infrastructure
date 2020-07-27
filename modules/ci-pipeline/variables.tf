@@ -42,3 +42,8 @@ variable docker_image {
   type    = string
   default = "aws/codebuild/standard:4.0"
 }
+
+variable "privileged_mode" {
+  type    = bool
+  default = false
+}

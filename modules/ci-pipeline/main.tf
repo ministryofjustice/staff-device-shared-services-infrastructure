@@ -294,6 +294,7 @@ resource "aws_codebuild_project" "development" {
     image                       = var.docker_image
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = var.privileged_mode
 
     environment_variable {
       name  = "ENV"
@@ -328,6 +329,7 @@ resource "aws_codebuild_project" "pre-production" {
     image                       = var.docker_image
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = var.privileged_mode
 
     environment_variable {
       name  = "ENV"
@@ -367,6 +369,7 @@ resource "aws_codebuild_project" "test" {
     image                       = var.docker_image
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = var.privileged_mode
   }
 
   logs_config {
@@ -397,6 +400,7 @@ resource "aws_codebuild_project" "production" {
     image                       = var.docker_image
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = var.privileged_mode
 
     environment_variable {
       name  = "ENV"
