@@ -93,7 +93,8 @@ data "aws_iam_policy_document" "this" {
       "ecr:ListImages",
       "ecr:PutImage",
       "ecr:SetRepositoryPolicy",
-      "ecr:UploadLayerPart"
+      "ecr:UploadLayerPart",
+      "ecr:GetAuthorizationToken"
     ]
     resources = ["*"]
   }
