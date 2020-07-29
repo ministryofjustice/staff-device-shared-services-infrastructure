@@ -81,10 +81,18 @@ data "aws_iam_policy_document" "this" {
   statement {
     actions = [
       "ecr:BatchCheckLayerAvailability",
+      "ecr:BatchDeleteImage",
+      "ecr:BatchGetImage",
       "ecr:CompleteLayerUpload",
-      "ecr:GetAuthorizationToken",
+      "ecr:DeleteRepository",
+      "ecr:DeleteRepositoryPolicy",
+      "ecr:DescribeRepositories",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetRepositoryPolicy",
       "ecr:InitiateLayerUpload",
+      "ecr:ListImages",
       "ecr:PutImage",
+      "ecr:SetRepositoryPolicy",
       "ecr:UploadLayerPart"
     ]
     resources = ["*"]
