@@ -53,3 +53,17 @@ resource "aws_cloudwatch_log_subscription_filter" "cloud_watch_forward_subscript
   filter_pattern  = ""
   destination_arn = var.destination_arn
 }
+
+resource "aws_cloudwatch_log_subscription_filter" "cloud_watch_forward_subscription_filter_infrastructure_dns_dhcp" {
+  name            = "cloud-watch-forward-subscription-filter-infrastructure-dns-dhcp-log-group-core"
+  log_group_name  = "pttp-ci-infrastructure-dns-dhcp-log-group-core"
+  filter_pattern  = ""
+  destination_arn = var.destination_arn
+}
+
+resource "aws_cloudwatch_log_subscription_filter" "cloud_watch_forward_subscription_filter_infrastructure_dns_dhcp_log_group_core" {
+  name            = "cloud-watch-forward-subscription-filter-pttp-ci-infrastructure-kea-server-log-group-core"
+  log_group_name  = "pttp-ci-infrastructure-kea-server-log-group-core"
+  filter_pattern  = ""
+  destination_arn = var.destination_arn
+}
