@@ -92,3 +92,20 @@ Run Terraform
 ```shell script
 make apply
 ```
+
+## Secrets management
+
+We use SSM Parameter store for all secrets.
+
+These secrets are decrypted at build time on CI to inject into Terraform.
+
+### To add or update a secret:
+
+``` shell script
+aws-vault exec moj-pttp-shared-services -- aws ssm put-parameter --name "/your/top/secret/name" \
+        --description "Secret description" \
+        --value "tops3cr3t" \
+        --type SecureString \
+        --key-id "kms key ID to encrypt with" \
+        --overwrite
+```
