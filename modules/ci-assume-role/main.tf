@@ -120,4 +120,11 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = ["*"]
   }
+
+  statement {
+    actions = [
+      "ecs:*"
+    ]
+    resources = ["*"]
+  }
 }
