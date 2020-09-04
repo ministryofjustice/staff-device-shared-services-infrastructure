@@ -30,7 +30,8 @@ data "aws_iam_policy_document" "this" {
   statement {
     actions = [
       "ssm:GetParameters",
-      "ssm:GetParameter"
+      "ssm:GetParameter",
+      "ssm:PutParameter",
     ]
     resources = ["*"]
   }
