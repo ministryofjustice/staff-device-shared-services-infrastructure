@@ -159,7 +159,7 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting" {
   github_repo_name         = "staff-infrastructure-monitoring"
   git_branch_name          = "main"
 
-  prefix_name = "${module.label.id}-infra-monitoring-alerting"
+  prefix_name = "${module.label.id}-ima"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
 
