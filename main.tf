@@ -168,6 +168,22 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting" {
   production_assume_role_arn     = var.production_assume_role_arn
 }
 
+module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting-snmpexporter" {
+  source                   = "./modules/ci-pipeline"
+  service_name             = "core"
+  github_organisation_name = "ministryofjustice"
+  github_repo_name         = "staff-infrastructure-monitoring-snmpexporter"
+  git_branch_name          = "main"
+
+  prefix_name = "${module.label.id}-snmp"
+  vpc_id      = module.vpc.vpc_id
+  subnet_ids  = module.vpc.private_subnets
+
+  dev_assume_role_arn            = var.dev_assume_role_arn
+  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+  production_assume_role_arn     = var.production_assume_role_arn
+}
+
 module "log-forward" {
   source          = "./modules/log-forwarding"
   destination_arn = var.kinesis_destination_arn
