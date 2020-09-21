@@ -73,7 +73,7 @@ module "pttp-infrastructure-ci-pipeline" {
   github_repo_name         = "pttp-infrastructure"
   git_branch_name          = "master"
 
-  name        = "Staff Device Logging"
+  name        = "Staff-Device-Logging"
   prefix_name = module.label.id
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
