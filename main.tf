@@ -73,6 +73,7 @@ module "pttp-infrastructure-ci-pipeline" {
   github_repo_name         = "pttp-infrastructure"
   git_branch_name          = "master"
 
+  name        = "Staff Device Logging"
   prefix_name = module.label.id
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -89,6 +90,7 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp" {
   github_repo_name         = "staff-device-dns-dhcp-infrastructure"
   git_branch_name          = "main"
 
+  name        = "${module.label.id}-dns-dhcp-core-pipeline"
   prefix_name = "${module.label.id}-dns-dhcp"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -105,6 +107,7 @@ module "pttp-infrastructure-ci-pipeline-dhcp-container" {
   github_repo_name         = "staff-device-dhcp-server"
   git_branch_name          = "main"
 
+  name        = "${module.label.id}-kea-server-core-pipeline"
   prefix_name = "${module.label.id}-kea-server"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -123,6 +126,7 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
   github_repo_name         = "staff-device-dns-dhcp-admin"
   git_branch_name          = "main"
 
+  name        = "${module.label.id}-admin-core-pipeline"
   prefix_name = "${module.label.id}-admin"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -141,6 +145,7 @@ module "pttp-infrastructure-ci-pipeline-dns-container" {
   github_repo_name         = "staff-device-dns-server"
   git_branch_name          = "main"
 
+  name        = "${module.label.id}-dns-server-core-pipeline"
   prefix_name = "${module.label.id}-dns-server"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -159,6 +164,7 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting" {
   github_repo_name         = "staff-infrastructure-monitoring"
   git_branch_name          = "main"
 
+  name        = "${module.label.id}-ima-core-pipeline"
   prefix_name = "${module.label.id}-ima"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -175,6 +181,7 @@ module "pttp-infrastructure-ci-pipeline-grafana-config" {
   github_repo_name         = "staff-infrastructure-monitoring-datasource-config"
   git_branch_name          = "main"
 
+  name        = "${module.label.id}-grafana-config--pipeline"
   prefix_name = "${module.label.id}-grafana-config"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -191,6 +198,7 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting-snmpexporter" 
   github_repo_name         = "staff-infrastructure-monitoring-snmpexporter"
   git_branch_name          = "main"
 
+  name        = "${module.label.id}-snmp-core-pipeline"
   prefix_name = "${module.label.id}-snmp"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -207,6 +215,7 @@ module "pttp-public-key-infrastructure-pipeline" {
   github_repo_name         = "staff-infrastructure-certificate-services"
   git_branch_name          = "main"
 
+  name        = "${module.label.id}-pki-core-pipeline"
   prefix_name = "${module.label.id}-pki"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets

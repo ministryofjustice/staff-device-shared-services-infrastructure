@@ -47,3 +47,7 @@ variable "privileged_mode" {
   type    = bool
   default = false
 }
+
+variable "name" {
+  type = string
+}
