@@ -51,3 +51,8 @@ variable "privileged_mode" {
 variable "name" {
   type = string
 }
+
+variable "auto_approve_pre_production_and_production_deployments" {
+  type    = bool
+  default = true
+}
