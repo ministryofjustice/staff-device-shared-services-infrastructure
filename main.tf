@@ -236,7 +236,7 @@ module "pttp-public-key-infrastructure-pipeline" {
   github_repo_name         = "staff-infrastructure-certificate-services"
   git_branch_name          = "main"
 
-  name        = "${module.label.id}-pki-core-pipeline"
+  name        = "Staff-Infrastructure-Certificate-Services"
   prefix_name = "${module.label.id}-pki"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
