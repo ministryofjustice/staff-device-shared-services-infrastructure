@@ -2,6 +2,8 @@ resource "aws_codepipeline" "codepipeline" {
   name     = var.name
   role_arn = aws_iam_role.codepipeline_role.arn
 
+  count = var.auto_approve_pre_production_and_production_deployments ? 1 : 0
+
   artifact_store {
     location = aws_s3_bucket.artifacts.bucket
     type     = "S3"
