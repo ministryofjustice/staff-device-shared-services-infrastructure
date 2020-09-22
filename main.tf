@@ -244,6 +244,8 @@ module "pttp-public-key-infrastructure-pipeline" {
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
+
+  auto_approve_pre_production_and_production_deployments = false
 }
 
 module "log-forward" {
