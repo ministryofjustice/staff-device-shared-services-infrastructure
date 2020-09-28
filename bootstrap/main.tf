@@ -11,18 +11,18 @@ module "label" {
   source  = "cloudposse/label/null"
   version = "0.16.0"
 
+  delimiter = "-"
   namespace = "pttp"
   stage     = "global-bootstrap"
   name      = "pttp-infrastructure"
-  delimiter = "-"
 
   tags = {
     "business-unit" = "MoJO"
-    "application"   = "pttp-shared-services-infrastructure",
-    "is-production" = tostring(var.is-production),
-    "owner"         = var.owner-email
-
     "environment-name" = "global"
+    "owner"         = var.owner-email
+    "is-production" = tostring(var.is-production)
+
+    "application"      = "pttp-shared-services-infrastructure",
     "source-code"      = "https://github.com/ministryofjustice/pttp-shared-services-infrastructure"
   }
 }

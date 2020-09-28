@@ -3,8 +3,8 @@ terraform {
 
   backend "s3" {
     region     = "eu-west-2"
-    bucket     = "pttp-global-bootstrap-pttp-infrastructure-tf-remote-state"
     key        = "terraform/v1/state"
+    bucket     = "pttp-global-bootstrap-pttp-infrastructure-tf-remote-state"
     lock_table = "pttp-global-bootstrap-pttp-infrastructure-terrafrom-remote-state-lock-dynamo"
   }
 }
@@ -193,15 +193,15 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting" {
   production_assume_role_arn     = var.production_assume_role_arn
 }
 
-module "pttp-infrastructure-ci-pipeline-grafana-config" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = ""
-  github_organisation_name = "ministryofjustice"
+module "pttp-infrastructure-ci-pipeline-datasource-config" {
   github_repo_name         = "staff-infrastructure-monitoring-datasource-config"
+  source                   = "./modules/ci-pipeline"
+  github_organisation_name = "ministryofjustice"
   git_branch_name          = "main"
+  service_name             = "core"
 
-  name        = "${module.label.id}-grafana-config--pipeline"
-  prefix_name = "${module.label.id}-grafana-config"
+  name        = "${module.label.id}-ds-config-core-pipeline"
+  prefix_name = "${module.label.id}-ds-config"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
 
@@ -211,11 +211,11 @@ module "pttp-infrastructure-ci-pipeline-grafana-config" {
 }
 
 module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting-snmpexporter" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = "core"
-  github_organisation_name = "ministryofjustice"
   github_repo_name         = "staff-infrastructure-monitoring-snmpexporter"
+  source                   = "./modules/ci-pipeline"
+  github_organisation_name = "ministryofjustice"
   git_branch_name          = "main"
+  service_name             = "core"
 
   name        = "${module.label.id}-snmp-core-pipeline"
   prefix_name = "${module.label.id}-snmp"
