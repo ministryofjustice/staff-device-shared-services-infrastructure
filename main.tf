@@ -239,33 +239,14 @@ module "staff-infrastructure-monitoring-blackbox-exporter" {
   name        = "staff-infrastructure-monitoring-blackbox-exporter"
   prefix_name = "${module.label.id}-bb-ex"
 
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
 
   privileged_mode = true
-}
-
-module "pttp-public-key-infrastructure-pipeline" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-infrastructure-certificate-services"
-  git_branch_name          = "main"
-
-  name        = "Staff-Infrastructure-Certificate-Services"
-  prefix_name = "${module.label.id}-pki"
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
-
-  dev_assume_role_arn            = var.dev_assume_role_arn
-  pre_production_assume_role_arn = var.pre_production_assume_role_arn
-  production_assume_role_arn     = var.production_assume_role_arn
-
-  auto_approve_pre_production_and_production_deployments = false
 }
 
 module "log-forward" {
