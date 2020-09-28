@@ -103,9 +103,9 @@ These secrets are decrypted at build time on CI to inject into Terraform.
 
 ``` shell script
 aws-vault exec moj-pttp-shared-services -- aws ssm put-parameter --name "/your/top/secret/name" \
-  --description "Secret description" \
-  --value "tops3cr3t" \
-  --type SecureString \
   --key-id "kms key ID to encrypt with" \
+  --description "Secret description" \
+  --type SecureString \
+  --value "tops3cr3t" \
   --overwrite
 ```
