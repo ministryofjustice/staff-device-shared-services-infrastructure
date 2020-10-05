@@ -127,7 +127,7 @@ module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
   git_branch_name          = "main"
 
   name        = "Staff-Device-Logging-Syslog-To-Cloudwatch"
-  prefix_name = "${module.label.id}-syslog-to-cloudwatch"
+  prefix_name = "${module.label.id}-log-syslog"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
 
