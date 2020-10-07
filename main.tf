@@ -138,6 +138,25 @@ module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
   privileged_mode = true
 }
 
+module "staff-device-logging-healthcheck" {
+  source                   = "./modules/ci-pipeline"
+  service_name             = "core"
+  github_organisation_name = "ministryofjustice"
+  github_repo_name         = "staff-device-ecs-health-check"
+  git_branch_name          = "main"
+
+  name        = "Staff-Device-Logging-Healthcheck"
+  prefix_name = "${module.label.id}-log-hc"
+  vpc_id      = module.vpc.vpc_id
+  subnet_ids  = module.vpc.private_subnets
+
+  dev_assume_role_arn            = var.dev_assume_role_arn
+  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+  production_assume_role_arn     = var.production_assume_role_arn
+
+  privileged_mode = true
+}
+
 
 module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
   source                   = "./modules/ci-pipeline"
