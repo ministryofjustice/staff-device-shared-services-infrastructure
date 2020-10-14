@@ -70,7 +70,7 @@ module "pttp-infrastructure-ci-pipeline" {
   source                   = "./modules/ci-pipeline"
   service_name             = "core"
   github_organisation_name = "ministryofjustice"
-  github_repo_name         = "pttp-infrastructure"
+  github_repo_name         = "staff-device-logging-infrastructure"
   git_branch_name          = "master"
 
   name        = "Staff-Device-Logging"
