@@ -71,7 +71,7 @@ module "pttp-infrastructure-ci-pipeline" {
   service_name             = "core"
   github_organisation_name = "ministryofjustice"
   github_repo_name         = "staff-device-logging-infrastructure"
-  git_branch_name          = "master"
+  git_branch_name          = "main"
 
   name        = "Staff-Device-Logging"
   prefix_name = module.label.id
