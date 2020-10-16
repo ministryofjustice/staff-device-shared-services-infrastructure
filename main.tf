@@ -272,6 +272,29 @@ module "log-forward" {
   source          = "./modules/log-forwarding"
   destination_arn = var.kinesis_destination_arn
   prefix_name     = module.label.id
+
+  subscription_log_group_names = [
+    "Panorama-Policy-as-Code-codepipeline-log-group",
+    "Panorama-codepipeline-log-group",
+    "pttp-ci-infrastructure-admin-log-group-core",
+    "pttp-ci-infrastructure-aggregation-log-group-",
+    "pttp-ci-infrastructure-bb-ex-log-group-core",
+    "pttp-ci-infrastructure-cloudtrail-log-group",
+    "pttp-ci-infrastructure-dns-dhcp-log-group-core",
+    "pttp-ci-infrastructure-dns-server-log-group-core",
+    "pttp-ci-infrastructure-ds-config-log-group-core",
+    "pttp-ci-infrastructure-grafana-config-log-group-",
+    "pttp-ci-infrastructure-ima-log-group-core",
+    "pttp-ci-infrastructure-kea-server-log-group-core",
+    "pttp-ci-infrastructure-log-group-core",
+    "pttp-ci-infrastructure-log-hc-log-group-core",
+    "pttp-ci-infrastructure-log-syslog-log-group-core",
+    "pttp-ci-infrastructure-pki-log-group-core",
+    "pttp-ci-infrastructure-snmp-log-group-core",
+    "pttp-ci-infrastructure-vpc-flow-logs-log-group",
+    "SOP-OCI-Access-codepipeline-log-group",
+    "TGW-codepipeline-log-group"
+  ]
 }
 
 module "cloudtrail" {
