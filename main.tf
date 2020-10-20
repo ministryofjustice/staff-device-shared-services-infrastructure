@@ -44,8 +44,6 @@ module "vpc" {
   map_public_ip_on_launch = false
 }
 
-
-
 module "label" {
   source  = "cloudposse/label/null"
   version = "0.16.0"
@@ -271,31 +269,47 @@ module "staff-infrastructure-monitoring-blackbox-exporter" {
 
 module "log-forward" {
   source          = "./modules/log-forwarding"
-  destination_arn = var.kinesis_destination_arn
   prefix_name     = module.label.id
 
-  subscription_log_group_names = [
-    "Panorama-Policy-as-Code-codepipeline-log-group",
-    "Panorama-codepipeline-log-group",
-    "pttp-ci-infrastructure-admin-log-group-core",
-    "pttp-ci-infrastructure-aggregation-log-group-",
-    "pttp-ci-infrastructure-bb-ex-log-group-core",
-    "pttp-ci-infrastructure-cloudtrail-log-group",
-    "pttp-ci-infrastructure-dns-dhcp-log-group-core",
-    "pttp-ci-infrastructure-dns-server-log-group-core",
-    "pttp-ci-infrastructure-ds-config-log-group-core",
-    "pttp-ci-infrastructure-grafana-config-log-group-",
-    "pttp-ci-infrastructure-ima-log-group-core",
-    "pttp-ci-infrastructure-kea-server-log-group-core",
-    "pttp-ci-infrastructure-log-group-core",
-    "pttp-ci-infrastructure-log-hc-log-group-core",
-    "pttp-ci-infrastructure-log-syslog-log-group-core",
-    "pttp-ci-infrastructure-pki-log-group-core",
-    "pttp-ci-infrastructure-snmp-log-group-core",
-    "pttp-ci-infrastructure-vpc-flow-logs-log-group",
-    "SOP-OCI-Access-codepipeline-log-group",
-    "TGW-codepipeline-log-group"
-  ]
+  subscriptions_config = {
+    production = {
+      destination_arn = var.production_kinesis_destination_arn,
+      log_groups = [
+        "Panorama-Policy-as-Code-codepipeline-log-group",
+        "Panorama-codepipeline-log-group",
+        "pttp-ci-infrastructure-admin-log-group-core",
+        "pttp-ci-infrastructure-aggregation-log-group-",
+        "pttp-ci-infrastructure-bb-ex-log-group-core",
+        "pttp-ci-infrastructure-cloudtrail-log-group",
+        "pttp-ci-infrastructure-dns-dhcp-log-group-core",
+        "pttp-ci-infrastructure-dns-server-log-group-core",
+        "pttp-ci-infrastructure-ds-config-log-group-core",
+        "pttp-ci-infrastructure-grafana-config-log-group-",
+        "pttp-ci-infrastructure-ima-log-group-core",
+        "pttp-ci-infrastructure-kea-server-log-group-core",
+        "pttp-ci-infrastructure-log-group-core",
+        "pttp-ci-infrastructure-log-hc-log-group-core",
+        "pttp-ci-infrastructure-log-syslog-log-group-core",
+        "pttp-ci-infrastructure-pki-log-group-core",
+        "pttp-ci-infrastructure-snmp-log-group-core",
+        "pttp-ci-infrastructure-vpc-flow-logs-log-group",
+        "SOP-OCI-Access-codepipeline-log-group",
+        "TGW-codepipeline-log-group"
+      ]
+    }, 
+    pre_production = {
+      destination_arn = var.pre_production_kinesis_destination_arn,
+      log_groups = [
+        "Logging-Heartbeat"
+      ]
+    },
+    development = {
+      destination_arn = var.development_kinesis_destination_arn,
+      log_groups = [
+        "Logging-Heartbeat"
+      ]
+    }
+  }
 }
 
 module "cloudtrail" {
@@ -312,4 +326,8 @@ module "vpc_flow_logs" {
   region = data.aws_region.current_region.id
   tags   = module.label.tags
   vpc_id = module.vpc.vpc_id
+}
+
+module "logging_heartbeat" {
+  source = "./modules/logging_heartbeat"
 }

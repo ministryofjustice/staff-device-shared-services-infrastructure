@@ -1,11 +1,20 @@
-variable "destination_arn" {
-  type = string
-}
-
 variable "prefix_name" {
   type = string
 }
 
-variable "subscription_log_group_names" {
-  type = list(string)
+variable "subscriptions_config" {
+  type = object({
+    production = object({
+      destination_arn = string
+      log_groups = list(string)
+    })
+    pre_production = object({
+      destination_arn = string
+      log_groups = list(string)
+    })
+    development = object({
+      destination_arn = string
+      log_groups = list(string)
+    })
+  })
 }

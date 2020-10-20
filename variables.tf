@@ -20,7 +20,15 @@ variable "production_assume_role_arn" {
   type = string
 }
 
-variable "kinesis_destination_arn" {
+variable "production_kinesis_destination_arn" {
+  type = string
+}
+
+variable "pre_production_kinesis_destination_arn" {
+  type = string
+}
+
+variable "development_kinesis_destination_arn" {
   type = string
 }
 
