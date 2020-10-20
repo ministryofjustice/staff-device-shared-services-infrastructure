@@ -2,8 +2,6 @@ resource "aws_codepipeline" "codepipeline" {
   name     = var.name
   role_arn = aws_iam_role.codepipeline_role.arn
 
-  count = var.auto_approve_pre_production_and_production_deployments ? 1 : 0
-
   artifact_store {
     location = aws_s3_bucket.artifacts.bucket
     type     = "S3"
@@ -88,6 +86,22 @@ resource "aws_codepipeline" "codepipeline" {
 
   stage {
     name = "Production"
+
+    dynamic "action" {
+      for_each = var.manual_production_deploy ? [1] : []
+      content {
+        name     = "Approve"
+        owner    = "AWS"
+        category = "Approval"
+        provider = "Manual"
+        version  = "1"
+        run_order  = 1
+
+        configuration = {
+          CustomData = "Deploy to ${aws_codebuild_project.production.name}?"
+        }
+      }
+    }
 
     action {
       name            = "Deploy"

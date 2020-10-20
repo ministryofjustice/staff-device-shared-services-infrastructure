@@ -77,6 +77,7 @@ module "pttp-infrastructure-ci-pipeline" {
   prefix_name = module.label.id
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
+  manual_production_deploy = true
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
