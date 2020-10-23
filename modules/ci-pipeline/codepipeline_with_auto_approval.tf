@@ -84,12 +84,13 @@ resource "aws_codepipeline" "codepipeline" {
     }
   }
 
-  stage {
-    name = "Production"
+  dynamic "stage" {
+    for_each = var.manual_production_deploy ? [1] : []
 
-    dynamic "action" {
-      for_each = var.manual_production_deploy ? [1] : []
-      content {
+    content {
+      name = "Production-Approve"
+
+      action {
         name     = "Approve"
         owner    = "AWS"
         category = "Approval"
@@ -102,6 +103,10 @@ resource "aws_codepipeline" "codepipeline" {
         }
       }
     }
+  }
+
+  stage {
+    name = "Production"
 
     action {
       name            = "Deploy"
@@ -110,6 +115,7 @@ resource "aws_codepipeline" "codepipeline" {
       provider        = "CodeBuild"
       input_artifacts = ["source_output"]
       version         = "1"
+      run_order       = 2
 
       configuration = {
         ProjectName = aws_codebuild_project.production.name
