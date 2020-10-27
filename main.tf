@@ -218,7 +218,7 @@ module "pttp-infrastructure-ci-pipeline-datasource-config" {
   git_branch_name          = "main"
   service_name             = "core"
 
-  name        = "${module.label.id}-ds-config-core-pipeline"
+  name        = "Staff-Infrastructure-Monitoring-Config"
   prefix_name = "${module.label.id}-ds-config"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
