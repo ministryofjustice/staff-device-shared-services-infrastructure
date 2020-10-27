@@ -182,7 +182,7 @@ module "pttp-infrastructure-ci-pipeline-metric-aggregation-container" {
   github_repo_name         = "staff-infrastructure-metric-aggregation-server"
   git_branch_name          = "main"
 
-  name        = "${module.label.id}-metric-aggregation-server-pipeline"
+  name        = "Staff-Infrastructure-Metric-Aggregation-Server"
   prefix_name = "${module.label.id}-aggregation"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
