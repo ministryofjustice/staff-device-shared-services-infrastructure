@@ -124,6 +124,7 @@ module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
   github_organisation_name = "ministryofjustice"
   github_repo_name         = "staff-device-logging-syslog-to-cloudwatch"
   git_branch_name          = "main"
+  manual_production_deploy = true
 
   name        = "Staff-Device-Logging-Syslog-To-Cloudwatch"
   prefix_name = "${module.label.id}-log-syslog"
