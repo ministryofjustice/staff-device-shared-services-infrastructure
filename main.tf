@@ -300,13 +300,13 @@ module "log-forward" {
     pre_production = {
       destination_arn = var.pre_production_kinesis_destination_arn,
       log_groups = [
-        "Logging-Heartbeat"
+        module.logging_heartbeat.pre_production_log_group_name
       ]
     },
     development = {
       destination_arn = var.development_kinesis_destination_arn,
       log_groups = [
-        "Logging-Heartbeat"
+        module.logging_heartbeat.development_log_group_name
       ]
     }
   }
@@ -330,4 +330,5 @@ module "vpc_flow_logs" {
 
 module "logging_heartbeat" {
   source = "./modules/logging_heartbeat"
+  tags   = module.label.tags
 }
