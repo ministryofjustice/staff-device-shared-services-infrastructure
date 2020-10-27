@@ -124,7 +124,6 @@ module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
   github_organisation_name = "ministryofjustice"
   github_repo_name         = "staff-device-logging-syslog-to-cloudwatch"
   git_branch_name          = "main"
-  manual_production_deploy = true
 
   name        = "Staff-Device-Logging-Syslog-To-Cloudwatch"
   prefix_name = "${module.label.id}-log-syslog"
@@ -202,7 +201,7 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting" {
   github_repo_name         = "staff-infrastructure-monitoring"
   git_branch_name          = "main"
 
-  name        = "${module.label.id}-ima-core-pipeline"
+  name        = "Staff-Infrastructure-Monitoring"
   prefix_name = "${module.label.id}-ima"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
@@ -297,7 +296,7 @@ module "log-forward" {
         "SOP-OCI-Access-codepipeline-log-group",
         "TGW-codepipeline-log-group"
       ]
-    }, 
+    },
     pre_production = {
       destination_arn = var.pre_production_kinesis_destination_arn,
       log_groups = [
