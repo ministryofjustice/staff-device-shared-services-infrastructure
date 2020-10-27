@@ -235,7 +235,7 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting-snmpexporter" 
   git_branch_name          = "main"
   service_name             = "core"
 
-  name        = "${module.label.id}-snmp-core-pipeline"
+  name        = "Staff-Infrastructure-Monitoring-SnmpExporter"
   prefix_name = "${module.label.id}-snmp"
   vpc_id      = module.vpc.vpc_id
   subnet_ids  = module.vpc.private_subnets
