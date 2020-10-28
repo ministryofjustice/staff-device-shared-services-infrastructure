@@ -72,7 +72,7 @@ EOF
   while true; do
     echo "Hello from the Prison Technology Transformation Programme Shared Services" >> /var/log/heartbeat-development
     echo "Hello from the Prison Technology Transformation Programme Shared Services" >> /var/log/heartbeat-pre-production
-    sleep 60
+    sleep 30
   done
 DATA
 
