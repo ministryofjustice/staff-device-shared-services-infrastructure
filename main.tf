@@ -294,7 +294,8 @@ module "log-forward" {
         "pttp-ci-infrastructure-snmp-log-group-core",
         "pttp-ci-infrastructure-vpc-flow-logs-log-group",
         "SOP-OCI-Access-codepipeline-log-group",
-        "TGW-codepipeline-log-group"
+        "TGW-codepipeline-log-group",
+        module.logging_heartbeat.production_log_group_name
       ]
     },
     pre_production = {

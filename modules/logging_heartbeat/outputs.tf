@@ -5,3 +5,7 @@ output "pre_production_log_group_name" {
 output "development_log_group_name" {
   value = aws_cloudwatch_log_group.logging_heartbeat_development.name
 }
+
+output "production_log_group_name" {
+  value = aws_cloudwatch_log_group.logging_heartbeat_production.name
+}

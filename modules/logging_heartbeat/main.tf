@@ -23,6 +23,12 @@ resource "aws_cloudwatch_log_group" "logging_heartbeat_development" {
   tags = var.tags
 }
 
+resource "aws_cloudwatch_log_group" "logging_heartbeat_production" {
+  name = "logging-heartbeat-production"
+
+  tags = var.tags
+}
+
 resource "aws_instance" "logging_heartbeat" {
   ami           = "ami-032598fcc7e9d1c7a"
   instance_type = "t2.micro"
@@ -57,6 +63,12 @@ log_group_name = logging-heartbeat-development
 log_stream_name = {instance_id}/{hostname}
 datetime_format = %b %d %H:%M:%S
 
+[/var/log/heartbeat-production]
+file = /var/log/heartbeat-production
+log_group_name = logging-heartbeat-production
+log_stream_name = {instance_id}/{hostname}
+datetime_format = %b %d %H:%M:%S
+
 [/var/log/heartbeat-pre-production]
 file = /var/log/heartbeat-pre-production
 log_group_name = logging-heartbeat-pre-production
@@ -72,6 +84,7 @@ EOF
   while true; do
     echo "Hello from the Prison Technology Transformation Programme Shared Services" >> /var/log/heartbeat-development
     echo "Hello from the Prison Technology Transformation Programme Shared Services" >> /var/log/heartbeat-pre-production
+    echo "Hello from the Prison Technology Transformation Programme Shared Services" >> /var/log/heartbeat-production
     sleep 30
   done
 DATA
