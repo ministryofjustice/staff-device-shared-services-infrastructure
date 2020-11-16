@@ -212,7 +212,7 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting" {
 }
 
 module "pttp-infrastructure-ci-pipeline-datasource-config" {
-  github_repo_name         = "staff-infrastructure-monitoring-datasource-config"
+  github_repo_name         = "staff-infrastructure-monitoring-config"
   source                   = "./modules/ci-pipeline"
   github_organisation_name = "ministryofjustice"
   git_branch_name          = "main"
