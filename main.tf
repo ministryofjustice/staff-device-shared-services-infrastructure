@@ -337,5 +337,5 @@ module "logging_heartbeat" {
 module "ecr_images" {
   source = "./modules/ecr_images"
 
-  repositories = ["alpine", "mysql", "alpine-ruby"]
+  repositories = ["admin", "admin-mysql", "dhcp", "dhcp-mysql", "dns"]
 }
