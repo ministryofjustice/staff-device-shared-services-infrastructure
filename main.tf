@@ -71,10 +71,10 @@ module "pttp-infrastructure-ci-pipeline" {
   github_repo_name         = "staff-device-logging-infrastructure"
   git_branch_name          = "main"
 
-  name        = "Staff-Device-Logging"
-  prefix_name = module.label.id
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
+  name                     = "Staff-Device-Logging"
+  prefix_name              = module.label.id
+  vpc_id                   = module.vpc.vpc_id
+  subnet_ids               = module.vpc.private_subnets
   manual_production_deploy = true
 
   dev_assume_role_arn            = var.dev_assume_role_arn
@@ -268,8 +268,8 @@ module "staff-infrastructure-monitoring-blackbox-exporter" {
 }
 
 module "log-forward" {
-  source          = "./modules/log-forwarding"
-  prefix_name     = module.label.id
+  source      = "./modules/log-forwarding"
+  prefix_name = module.label.id
 
   subscriptions_config = {
     production = {
@@ -332,4 +332,10 @@ module "vpc_flow_logs" {
 module "logging_heartbeat" {
   source = "./modules/logging_heartbeat"
   tags   = module.label.tags
+}
+
+module "ecr_images" {
+  source = "./modules/ecr_images"
+
+  repositories = ["alpine", "mysql", "alpine-ruby"]
 }
