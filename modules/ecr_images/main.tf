@@ -1,3 +1,5 @@
+# ECR's may be destroyed after altering this module
+# Run the build_and_publish script within https://github.com/ministryofjustice/staff-device-docker-base-images 
 resource "aws_ecr_repository" "docker_repository" {
   for_each             = var.repositories
   name                 = each.value
@@ -36,6 +38,31 @@ resource "aws_ecr_repository_policy" "docker_repository_policy" {
                 "ecr:SetRepositoryPolicy",
                 "ecr:DeleteRepositoryPolicy"
             ]
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_ecr_lifecycle_policy" "docker_lifecyle_policy" {
+  for_each   = var.repositories
+  repository = each.value
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Expire images older than 7 days",
+            "selection": {
+                "tagStatus": "untagged",
+                "countType": "sinceImagePushed",
+                "countUnit": "days",
+                "countNumber": 7
+            },
+            "action": {
+                "type": "expire"
+            }
         }
     ]
 }
