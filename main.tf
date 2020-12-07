@@ -337,5 +337,5 @@ module "logging_heartbeat" {
 module "ecr_images" {
   source = "./modules/ecr_images"
 
-  repositories = ["admin", "admin-mysql", "dhcp", "dhcp-mysql", "dns", "nginx"]
+  repositories = ["admin", "admin-mysql", "dhcp", "dhcp-mysql", "dns", "nginx", "prometheus", "snmp-exporter", "blackbox-exporter"]
 }
