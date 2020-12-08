@@ -209,6 +209,8 @@ module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting" {
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
+
+  privileged_mode = true
 }
 
 module "pttp-infrastructure-ci-pipeline-datasource-config" {
