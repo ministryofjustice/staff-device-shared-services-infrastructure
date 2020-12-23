@@ -5,7 +5,7 @@ terraform {
     region     = "eu-west-2"
     key        = "terraform/v1/state"
     bucket     = "pttp-global-bootstrap-pttp-infrastructure-tf-remote-state"
-    lock_table = "pttp-global-bootstrap-pttp-infrastructure-terrafrom-remote-state-lock-dynamo"
+    dynamodb_table = "pttp-global-bootstrap-pttp-infrastructure-terrafrom-remote-state-lock-dynamo"
   }
 }
 
@@ -21,7 +21,7 @@ locals {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.28.0"
+  version = "2.50.0"
 
   name = module.label.id
 
@@ -46,7 +46,7 @@ module "vpc" {
 
 module "label" {
   source  = "cloudposse/label/null"
-  version = "0.16.0"
+  version = "0.19.2"
 
   namespace = "pttp"
   stage     = terraform.workspace
