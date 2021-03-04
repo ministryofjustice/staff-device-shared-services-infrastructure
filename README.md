@@ -2,11 +2,36 @@
 
 This creates the shared infrastructure for the main account, named Shared Services. This account is used to host CI/CD pipelines.
 
-For the code that creates infrastructure for each environment please see [this repository](https://github.com/ministryofjustice/pttp-infrastructure).
+For the code that creates infrastructure for each environment please see [this repository](https://github.com/ministryofjustice/staff-device-logging-infrastructure), as an example.
 
-To apply the Terraform in this project, you should be using a Terraform workspace named `ci`.
 
 This repository holds the Terraform code to create a [CodeBuild](https://aws.amazon.com/codebuild/) / [CodePipeline](https://aws.amazon.com/codepipeline/) service in AWS.
+
+## Applying the terraform
+
+To apply the Terraform in this project using [AWS Vault](https://github.com/99designs/aws-vault) to authenticate:
+
+1. Create a profile for the AWS Shared Services account, if not done so already
+```
+aws-vault add moj-shared-services
+```
+This will prompt you for the values of your AWS Shared Services account's IAM user.
+
+2. Prepare your working directory for Terraform
+
+```
+aws-vault exec moj-shared-services -- terraform init
+```
+3. Select the `ci` workspace, to apply the changes in
+ ```
+ aws-vault exec moj-shared-services -- terraform workspace select ci
+ ```
+4. Apply the changes
+```
+aws-vault exec moj-shared-services -- make apply
+```
+
+>Note: When inspecting the terraform plan, the OAuth tokens for each pipeline will show as changed every time.
 
 ## How to use this repo
 
