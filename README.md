@@ -37,9 +37,11 @@ aws-vault exec moj-shared-services -- make apply
 
 The source code in this repository is provided only as a reference.
 
-Please speak to someone on the PTTP team to get a pipeline set up for your own project.
+Please consult with someone on the Cloud Ops team before you use this repository to have a pipeline set up for your own project.
 
 The pipeline you set will be integrated with a GitHub repository, and will build your project according to your [buildspec](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) files.
+
+This repository upon execution will create a couple of s3 buckets and a DynamoDB table. So, if your project uses Terraform, make sure that the backend for that Terraform is configured to use the newly created s3 bucket and the DynamoDB table.
 
 Depending on your build process, you may require 3 files to do linting, testing and deployment.
 
@@ -102,7 +104,9 @@ phases:
 
 ## To create your own Pipeline
 
-For experimenting with AWS CodePipeline / CodeBuild, you can execute the Terraform in this repository.
+To have a Pipeline for your own project with AWS CodePipeline / CodeBuild, you can execute the Terraform in this repository.
+
+Re-use the module `./modules/ci-pipeline` in the `main.tf` file to setup your own Pipeline. 
 
 An OAuth token is required to pull your source code from Github.
 
