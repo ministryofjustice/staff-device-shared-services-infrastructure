@@ -289,6 +289,26 @@ module "staff-device-private-dns-zone" {
   privileged_mode = true
 }
 
+module "staff-infrastructure-monitoring-deployments" {
+  github_repo_name         = "staff-infrastructure-monitoring-deployments"
+  source                   = "./modules/ci-pipeline"
+  github_organisation_name = "ministryofjustice"
+  git_branch_name          = "main"
+  service_name             = "core"
+
+  name        = "staff-infrastructure-monitoring-deployments"
+  prefix_name = "${module.label.id}-ima-deploy"
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  dev_assume_role_arn            = var.dev_assume_role_arn
+  production_assume_role_arn     = var.production_assume_role_arn
+  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+
+  privileged_mode = true
+}
+
 module "log-forward" {
   source      = "./modules/log-forwarding"
   prefix_name = module.label.id
