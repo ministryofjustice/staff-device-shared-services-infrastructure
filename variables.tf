@@ -20,6 +20,10 @@ variable "production_assume_role_arn" {
   type = string
 }
 
+variable "production_account_id" {
+  type = string
+}
+
 variable "production_kinesis_destination_arn" {
   type = string
 }
