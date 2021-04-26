@@ -19,6 +19,6 @@ resource "aws_iam_policy" "production_cloudwatch_exporter_access_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "production_cloudwatch_access_policy_attachment" {
-  policy_arn = aws_iam_policy.production_cloudwatch_exporter_access_policy
+  policy_arn = aws_iam_policy.production_cloudwatch_exporter_access_policy.arn
   role       = aws_iam_role.production_cloudwatch_exporter_role.name
 }
