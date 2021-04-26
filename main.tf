@@ -342,6 +342,6 @@ module "ecr_images" {
   repositories = ["admin", "admin-mysql", "dhcp", "dhcp-mysql", "dns", "nginx", "prometheus", "snmp-exporter", "blackbox-exporter", "selenium-hub", "selenium-node-chrome"]
 }
 
-module "cloudwatch_exporter_roles" {
-  source = "./modules/cloudwatch_export_roles"
+module "cloudwatch_exporter_role" {
+  source = "./modules/cloudwatch_export_role"
 }
