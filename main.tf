@@ -397,3 +397,7 @@ module "ecr_images" {
     "cloudwatch-exporter"
   ]
 }
+
+module "cloudwatch_exporter_role" {
+  source = "./modules/cloudwatch_export_role"
+}
