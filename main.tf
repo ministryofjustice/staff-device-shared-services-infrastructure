@@ -335,7 +335,7 @@ module "network-access-control-server" {
   service_name             = "core"
 
   name        = "network-access-control-server"
-  prefix_name = "${module.label.id}-nac"
+  prefix_name = "${module.label.id}-nac-server"
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
@@ -353,7 +353,7 @@ module "network-access-control-admin" {
   service_name             = "core"
 
   name        = "network-access-control-admin"
-  prefix_name = "${module.label.id}-nac"
+  prefix_name = "${module.label.id}-nac-admin"
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
@@ -362,7 +362,6 @@ module "network-access-control-admin" {
   production_assume_role_arn     = var.production_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
 }
-
 
 module "log-forward" {
   source      = "./modules/log-forwarding"
