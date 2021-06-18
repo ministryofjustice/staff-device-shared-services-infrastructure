@@ -309,6 +309,61 @@ module "staff-infrastructure-monitoring-deployments" {
   privileged_mode = true
 }
 
+module "network-access-control-infrastructure" {
+  github_repo_name         = "network-access-control-infrastructure"
+  source                   = "./modules/ci-pipeline"
+  github_organisation_name = "ministryofjustice"
+  git_branch_name          = "main"
+  service_name             = "core"
+
+  name        = "network-access-control-infrastructure"
+  prefix_name = "${module.label.id}-nac"
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  dev_assume_role_arn            = var.dev_assume_role_arn
+  production_assume_role_arn     = var.production_assume_role_arn
+  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+}
+
+module "network-access-control-server" {
+  github_repo_name         = "network-access-control-server"
+  source                   = "./modules/ci-pipeline"
+  github_organisation_name = "ministryofjustice"
+  git_branch_name          = "main"
+  service_name             = "core"
+
+  name        = "network-access-control-server"
+  prefix_name = "${module.label.id}-nac"
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  dev_assume_role_arn            = var.dev_assume_role_arn
+  production_assume_role_arn     = var.production_assume_role_arn
+  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+}
+
+module "network-access-control-admin" {
+  github_repo_name         = "network-access-control-admin"
+  source                   = "./modules/ci-pipeline"
+  github_organisation_name = "ministryofjustice"
+  git_branch_name          = "main"
+  service_name             = "core"
+
+  name        = "network-access-control-admin"
+  prefix_name = "${module.label.id}-nac"
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  dev_assume_role_arn            = var.dev_assume_role_arn
+  production_assume_role_arn     = var.production_assume_role_arn
+  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+}
+
+
 module "log-forward" {
   source      = "./modules/log-forwarding"
   prefix_name = module.label.id
