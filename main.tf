@@ -343,6 +343,8 @@ module "network-access-control-server" {
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
+
+  privileged_mode = true
 }
 
 module "network-access-control-admin" {
@@ -361,6 +363,8 @@ module "network-access-control-admin" {
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
+
+  privileged_mode = true
 }
 
 module "log-forward" {
