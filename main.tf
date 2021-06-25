@@ -367,6 +367,25 @@ module "network-access-control-admin" {
   privileged_mode = true
 }
 
+module "staff-infrastructure-network-services" {
+  source                   = "./modules/ci-pipeline"
+  service_name             = "core"
+  github_organisation_name = "ministryofjustice"
+  github_repo_name         = "staff-infrastructure-network-services"
+  git_branch_name          = "main"
+
+  name                     = "staff-infrastructure-network-services"
+  prefix_name              = "${module.label.id}-smtp-relay"
+  
+  vpc_id                   = module.vpc.vpc_id
+  subnet_ids               = module.vpc.private_subnets
+  manual_production_deploy = true
+
+  dev_assume_role_arn            = var.dev_assume_role_arn
+  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+  production_assume_role_arn     = var.production_assume_role_arn
+}
+
 module "log-forward" {
   source      = "./modules/log-forwarding"
   prefix_name = module.label.id
