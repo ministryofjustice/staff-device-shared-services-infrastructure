@@ -375,7 +375,7 @@ module "staff-infrastructure-network-services" {
   git_branch_name          = "main"
 
   name                     = "staff-infrastructure-network-services"
-  prefix_name              = "${module.label.id}-smtp-relay"
+  prefix_name              = "${module.label.id}-net-svcs"
   
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
