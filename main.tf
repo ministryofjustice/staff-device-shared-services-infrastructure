@@ -490,7 +490,8 @@ module "ecr_images" {
     "thanos",
     "grafana",
     "grafana-image-renderer",
-    "cloudwatch-exporter"
+    "cloudwatch-exporter",
+    "alpine"
   ]
 }
 
