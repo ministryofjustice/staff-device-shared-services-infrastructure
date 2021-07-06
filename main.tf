@@ -2,9 +2,9 @@ terraform {
   required_version = "> 0.12.0"
 
   backend "s3" {
-    region     = "eu-west-2"
-    key        = "terraform/v1/state"
-    bucket     = "pttp-global-bootstrap-pttp-infrastructure-tf-remote-state"
+    region         = "eu-west-2"
+    key            = "terraform/v1/state"
+    bucket         = "pttp-global-bootstrap-pttp-infrastructure-tf-remote-state"
     dynamodb_table = "pttp-global-bootstrap-pttp-infrastructure-terrafrom-remote-state-lock-dynamo"
   }
 }
@@ -374,11 +374,29 @@ module "staff-infrastructure-network-services" {
   github_repo_name         = "staff-infrastructure-network-services"
   git_branch_name          = "main"
 
-  name                     = "staff-infrastructure-network-services"
-  prefix_name              = "${module.label.id}-net-svcs"
-  
-  vpc_id                   = module.vpc.vpc_id
-  subnet_ids               = module.vpc.private_subnets
+  name        = "staff-infrastructure-network-services"
+  prefix_name = "${module.label.id}-net-svcs"
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
+
+  dev_assume_role_arn            = var.dev_assume_role_arn
+  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+  production_assume_role_arn     = var.production_assume_role_arn
+}
+
+module "staff-infrastructure-smtp-relay-server" {
+  source                   = "./modules/ci-pipeline"
+  service_name             = "core"
+  github_organisation_name = "ministryofjustice"
+  github_repo_name         = "staff-infrastructure-smtp-relay-server"
+  git_branch_name          = "main"
+
+  name        = "staff-infrastructure-smtp-relay-server"
+  prefix_name = "${module.label.id}-smtp-relay"
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
