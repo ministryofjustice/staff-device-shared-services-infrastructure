@@ -333,6 +333,7 @@ module "network-access-control-server" {
   github_organisation_name = "ministryofjustice"
   git_branch_name          = "main"
   service_name             = "core"
+  docker_image             = "aws/codebuild/standard:5.0"
 
   name        = "network-access-control-server"
   prefix_name = "${module.label.id}-nac-server"
@@ -353,6 +354,7 @@ module "network-access-control-admin" {
   github_organisation_name = "ministryofjustice"
   git_branch_name          = "main"
   service_name             = "core"
+  docker_image             = "aws/codebuild/standard:5.0"
 
   name        = "network-access-control-admin"
   prefix_name = "${module.label.id}-nac-admin"
