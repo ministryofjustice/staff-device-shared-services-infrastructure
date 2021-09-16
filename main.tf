@@ -315,6 +315,7 @@ module "network-access-control-infrastructure" {
   github_organisation_name = "ministryofjustice"
   git_branch_name          = "main"
   service_name             = "core"
+  manual_production_deploy = true
 
   name        = "network-access-control-infrastructure"
   prefix_name = "${module.label.id}-nac"
@@ -334,6 +335,7 @@ module "network-access-control-server" {
   git_branch_name          = "main"
   service_name             = "core"
   docker_image             = "aws/codebuild/standard:5.0"
+  manual_production_deploy = true
 
   name        = "network-access-control-server"
   prefix_name = "${module.label.id}-nac-server"
@@ -355,6 +357,7 @@ module "network-access-control-admin" {
   git_branch_name          = "main"
   service_name             = "core"
   docker_image             = "aws/codebuild/standard:5.0"
+  manual_production_deploy = true
 
   name        = "network-access-control-admin"
   prefix_name = "${module.label.id}-nac-admin"
