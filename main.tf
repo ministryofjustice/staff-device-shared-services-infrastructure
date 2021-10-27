@@ -498,7 +498,8 @@ module "ecr_images" {
     "cloudwatch-exporter",
     "alpine",
     "network-access-control-test-certs",
-    "network-access-control-server"
+    "network-access-control-server",
+    "network-access-control-integration-tests",
   ]
 }
 
