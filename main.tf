@@ -497,9 +497,6 @@ module "ecr_images" {
     "grafana-image-renderer",
     "cloudwatch-exporter",
     "alpine",
-    "network-access-control-test-certs",
-    "network-access-control-server",
-    "network-access-control-integration-tests",
   ]
 }
 
