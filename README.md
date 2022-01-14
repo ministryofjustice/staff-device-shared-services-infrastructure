@@ -138,3 +138,20 @@ aws-vault exec moj-pttp-shared-services -- aws ssm put-parameter --name "/your/t
   --value "tops3cr3t" \
   --overwrite
 ```
+
+### Pipeline flags
+
+2 flags exist for pipelines and can be turned on or off when invoking the pipeline module.
+
+```
+manual_production_deploy
+```
+
+This option adds a stage to the pipeline where manual confirmation is required before deploying to production.
+
+```
+production_plan
+```
+
+This option adds stage where changes to infrastructure can be inspected before applying. Typically used in combination with the `manual_production_deploy`. This will set an environment variable on the stage of `PLAN="true"`.
+Buildspec files can be modified to look for the existence of this variable to do either a `terraform plan` or `terraform apply`.
