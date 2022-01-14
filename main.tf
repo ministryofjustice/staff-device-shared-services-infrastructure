@@ -336,6 +336,7 @@ module "network-access-control-server" {
   service_name             = "core"
   docker_image             = "aws/codebuild/standard:5.0"
   manual_production_deploy = true
+  production_plan          = true
 
   name        = "network-access-control-server"
   prefix_name = "${module.label.id}-nac-server"

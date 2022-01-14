@@ -56,3 +56,8 @@ variable "manual_production_deploy" {
   type = bool
   default = false
 }
+
+variable "production_plan" {
+  type = bool
+  default = false
+}
