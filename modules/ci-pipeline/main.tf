@@ -119,7 +119,8 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
         "${aws_codebuild_project.test.id}",
         "${aws_codebuild_project.development.id}",
         "${aws_codebuild_project.pre-production.id}",
-        "${aws_codebuild_project.production.id}"
+        "${aws_codebuild_project.production.id}",
+        "${aws_codebuild_project.plan_production.id}"
       ]
     },
     {
@@ -278,6 +279,46 @@ resource "aws_codebuild_project" "test" {
   source {
     type      = "CODEPIPELINE"
     buildspec = "buildspec.test.yml"
+  }
+}
+
+resource "aws_codebuild_project" "plan_production" {
+  name          = "${var.prefix_name}-${var.service_name}-plan-production"
+  description   = "Plan production changes"
+  build_timeout = 60
+  service_role  = module.ci-assume-role-production.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = var.docker_image
+    type                        = "LINUX_CONTAINER"
+    image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = var.privileged_mode
+
+    environment_variable {
+      name  = "ENV"
+      value = "production"
+    }
+
+    environment_variable {
+      name  = "PLAN"
+      value = "true"
+    }
+  }
+
+  logs_config {
+    cloudwatch_logs {
+      group_name  = local.log_group_name
+      stream_name = local.log_stream_name
+    }
+  }
+
+  source {
+    type      = "CODEPIPELINE"
   }
 }
 

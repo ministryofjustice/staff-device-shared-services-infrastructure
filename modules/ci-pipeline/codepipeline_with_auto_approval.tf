@@ -85,6 +85,28 @@ resource "aws_codepipeline" "codepipeline" {
   }
 
   dynamic "stage" {
+    for_each = var.production_plan ? [1] : []
+
+    content {
+      name = "Production-Plan"
+
+      action {
+        name     = "Plan"
+        owner    = "AWS"
+        category = "Build"
+        provider = "CodeBuild"
+        version  = "1"
+        run_order  = 1
+
+        configuration = {
+          ProjectName = aws_codebuild_project.plan_production.name
+        }
+      }
+    }
+  }
+
+
+  dynamic "stage" {
     for_each = var.manual_production_deploy ? [1] : []
 
     content {
@@ -96,7 +118,7 @@ resource "aws_codepipeline" "codepipeline" {
         category = "Approval"
         provider = "Manual"
         version  = "1"
-        run_order  = 1
+        run_order  = 2
 
         configuration = {
           CustomData = "Deploy to ${aws_codebuild_project.production.name}?"
@@ -115,7 +137,7 @@ resource "aws_codepipeline" "codepipeline" {
       provider        = "CodeBuild"
       input_artifacts = ["source_output"]
       version         = "1"
-      run_order       = 2
+      run_order       = 3
 
       configuration = {
         ProjectName = aws_codebuild_project.production.name
