@@ -97,6 +97,7 @@ resource "aws_codepipeline" "codepipeline" {
         provider = "CodeBuild"
         version  = "1"
         run_order  = 1
+        input_artifacts = ["source_output"]
 
         configuration = {
           ProjectName = aws_codebuild_project.plan_production.name
