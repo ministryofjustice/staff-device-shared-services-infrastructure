@@ -39,7 +39,7 @@ resource "aws_cloudtrail" "pttp_cloudtrail" {
   name                          = "${var.prefix}-cloudtrail"
   s3_bucket_name                = element(aws_s3_bucket.cloudtrail_bucket.*.id, 0)
   s3_key_prefix                 = local.s3_bucket_log_prefix
-  cloud_watch_logs_group_arn    = element(aws_cloudwatch_log_group.cloudtrail_log_group.*.arn, 0)
+  cloud_watch_logs_group_arn    = "${element(aws_cloudwatch_log_group.cloudtrail_log_group.*.arn, 0)}:*"
   cloud_watch_logs_role_arn     = element(aws_iam_role.cloudtrail_role.*.arn, 0)
   include_global_service_events = true
   is_multi_region_trail         = true

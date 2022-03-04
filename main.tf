@@ -1,16 +1,22 @@
 terraform {
-  required_version = "> 0.12.0"
-
   backend "s3" {
-    region         = "eu-west-2"
-    key            = "terraform/v1/state"
     bucket         = "pttp-global-bootstrap-pttp-infrastructure-tf-remote-state"
     dynamodb_table = "pttp-global-bootstrap-pttp-infrastructure-terrafrom-remote-state-lock-dynamo"
+    key            = "terraform/v1/state"
+    region         = "eu-west-2"
+  }
+
+  required_providers {
+    aws = {
+      source                = "hashicorp/aws"
+      version               = "~> 3.0"
+      configuration_aliases = [aws.env]
+    }
   }
 }
 
 provider "aws" {
-  version = "~> 2.52"
+  region = "eu-west-2"
 }
 
 data "aws_region" "current_region" {}
@@ -21,7 +27,7 @@ locals {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.50.0"
+  version = "2.78.0"
 
   name = module.label.id
 
@@ -46,7 +52,7 @@ module "vpc" {
 
 module "label" {
   source  = "cloudposse/label/null"
-  version = "0.19.2"
+  version = "0.24.1"
 
   namespace = "pttp"
   stage     = terraform.workspace

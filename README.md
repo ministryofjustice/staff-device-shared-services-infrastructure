@@ -11,22 +11,28 @@ This repository holds the Terraform code to create a [CodeBuild](https://aws.ama
 
 To apply the Terraform in this project using [AWS Vault](https://github.com/99designs/aws-vault) to authenticate:
 
-1. Create a profile for the AWS Shared Services account, if not done so already
+1. Install required Terraform version
+```
+tfenv install 1.1.7
+tfenv use 1.1.7
+```
+
+2. Create a profile for the AWS Shared Services account, if not done so already
 ```
 aws-vault add moj-shared-services
 ```
 This will prompt you for the values of your AWS Shared Services account's IAM user.
 
-2. Prepare your working directory for Terraform
+3. Prepare your working directory for Terraform
 
 ```
 aws-vault exec moj-shared-services -- terraform init
 ```
-3. Select the `ci` workspace, to apply the changes in
+4. Select the `ci` workspace, to apply the changes in
  ```
  aws-vault exec moj-shared-services -- terraform workspace select ci
  ```
-4. Apply the changes
+5. Apply the changes
 ```
 aws-vault exec moj-shared-services -- make apply
 ```
