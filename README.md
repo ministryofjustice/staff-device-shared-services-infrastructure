@@ -1,4 +1,4 @@
-# PTTP Shared Services Infrastructure
+# MoJ Official Shared Services Infrastructure
 
 This creates the shared infrastructure for the main account, named Shared Services. This account is used to host CI/CD pipelines.
 
