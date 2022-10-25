@@ -484,29 +484,6 @@ module "logging_heartbeat" {
   tags   = module.label.tags
 }
 
-module "ecr_images" {
-  source = "./modules/ecr_images"
-
-  repositories = [
-    "admin",
-    "admin-mysql",
-    "dhcp",
-    "dhcp-mysql",
-    "dns",
-    "nginx",
-    "prometheus",
-    "snmp-exporter",
-    "blackbox-exporter",
-    "selenium-hub",
-    "selenium-node-chrome",
-    "thanos",
-    "grafana",
-    "grafana-image-renderer",
-    "cloudwatch-exporter",
-    "alpine",
-  ]
-}
-
 module "cloudwatch_exporter_role" {
   source = "./modules/cloudwatch_exporter_role"
 
