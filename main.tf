@@ -181,23 +181,6 @@ module "pttp-infrastructure-ci-pipeline-dns-container" {
   privileged_mode = true
 }
 
-module "pttp-infrastructure-ci-pipeline-datasource-config" {
-  github_repo_name         = "staff-infrastructure-monitoring-config"
-  source                   = "./modules/ci-pipeline"
-  github_organisation_name = "ministryofjustice"
-  git_branch_name          = "main"
-  service_name             = "core"
-
-  name        = "Staff-Infrastructure-Monitoring-Config"
-  prefix_name = "${module.label.id}-ds-config"
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
-
-  dev_assume_role_arn            = var.dev_assume_role_arn
-  pre_production_assume_role_arn = var.pre_production_assume_role_arn
-  production_assume_role_arn     = var.production_assume_role_arn
-}
-
 module "pttp-infrastructure-ci-pipeline-infra-monitoring-alerting-snmpexporter" {
   github_repo_name         = "staff-infrastructure-monitoring-snmpexporter"
   source                   = "./modules/ci-pipeline"
