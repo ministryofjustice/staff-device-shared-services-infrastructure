@@ -91,12 +91,12 @@ resource "aws_codepipeline" "codepipeline" {
       name = "Production-Plan"
 
       action {
-        name     = "Plan"
-        owner    = "AWS"
-        category = "Build"
-        provider = "CodeBuild"
-        version  = "1"
-        run_order  = 1
+        name            = "Plan"
+        owner           = "AWS"
+        category        = "Build"
+        provider        = "CodeBuild"
+        version         = "1"
+        run_order       = 1
         input_artifacts = ["source_output"]
 
         configuration = {
@@ -114,12 +114,12 @@ resource "aws_codepipeline" "codepipeline" {
       name = "Production-Approve"
 
       action {
-        name     = "Approve"
-        owner    = "AWS"
-        category = "Approval"
-        provider = "Manual"
-        version  = "1"
-        run_order  = 2
+        name      = "Approve"
+        owner     = "AWS"
+        category  = "Approval"
+        provider  = "Manual"
+        version   = "1"
+        run_order = 2
 
         configuration = {
           CustomData = "Deploy to ${aws_codebuild_project.production.name}?"

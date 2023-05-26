@@ -17,12 +17,12 @@ module "label" {
   name      = "pttp-infrastructure"
 
   tags = {
-    "business-unit" = "MoJO"
+    "business-unit"    = "MoJO"
     "environment-name" = "global"
-    "owner"         = var.owner-email
-    "is-production" = tostring(var.is-production)
+    "owner"            = var.owner-email
+    "is-production"    = tostring(var.is-production)
 
-    "application"      = "pttp-shared-services-infrastructure",
-    "source-code"      = "https://github.com/ministryofjustice/pttp-shared-services-infrastructure"
+    "application" = "pttp-shared-services-infrastructure",
+    "source-code" = "https://github.com/ministryofjustice/pttp-shared-services-infrastructure"
   }
 }

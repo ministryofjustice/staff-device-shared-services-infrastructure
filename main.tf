@@ -290,11 +290,11 @@ module "staff-infrastructure-smtp-relay-server" {
   github_organisation_name = "ministryofjustice"
   github_repo_name         = "ministryofjustice/staff-infrastructure-smtp-relay-server"
   git_branch_name          = "main"
-  name        = "staff-infrastructure-smtp-relay-server"
-  prefix_name = "${module.label.id}-smtp-relay"
-  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  name                     = "staff-infrastructure-smtp-relay-server"
+  prefix_name              = "${module.label.id}-smtp-relay"
+  codestar_connection_arn  = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                   = module.vpc.vpc_id
+  subnet_ids               = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn

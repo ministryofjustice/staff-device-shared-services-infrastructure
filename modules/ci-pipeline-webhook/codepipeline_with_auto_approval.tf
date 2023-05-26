@@ -24,10 +24,9 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["source_output"]
 
       configuration = {
-       //ConnectionArn        = "arn:aws:codestar-connections:eu-west-2:683290208331:connection/0e285e0a-2a55-42f1-9c0b-cf7115be6253" // using an existing connection temporarily until we create a new connection for all of our repos
-        ConnectionArn        = var.codestar_connection_arn
-        FullRepositoryId     = var.github_repo_name
-        BranchName           = var.git_branch_name
+        ConnectionArn    = var.codestar_connection_arn
+        FullRepositoryId = var.github_repo_name
+        BranchName       = var.git_branch_name
       }
     }
   }
@@ -90,12 +89,12 @@ resource "aws_codepipeline" "codepipeline" {
       name = "Production-Plan"
 
       action {
-        name     = "Plan"
-        owner    = "AWS"
-        category = "Build"
-        provider = "CodeBuild"
-        version  = "1"
-        run_order  = 1
+        name            = "Plan"
+        owner           = "AWS"
+        category        = "Build"
+        provider        = "CodeBuild"
+        version         = "1"
+        run_order       = 1
         input_artifacts = ["source_output"]
 
         configuration = {
@@ -113,12 +112,12 @@ resource "aws_codepipeline" "codepipeline" {
       name = "Production-Approve"
 
       action {
-        name     = "Approve"
-        owner    = "AWS"
-        category = "Approval"
-        provider = "Manual"
-        version  = "1"
-        run_order  = 2
+        name      = "Approve"
+        owner     = "AWS"
+        category  = "Approval"
+        provider  = "Manual"
+        version   = "1"
+        run_order = 2
 
         configuration = {
           CustomData = "Deploy to ${aws_codebuild_project.production.name}?"

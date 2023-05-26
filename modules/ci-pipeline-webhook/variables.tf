@@ -38,7 +38,7 @@ variable "production_assume_role_arn" {
   type = string
 }
 
-variable docker_image {
+variable "docker_image" {
   type    = string
   default = "aws/codebuild/standard:4.0"
 }
@@ -53,14 +53,14 @@ variable "name" {
 }
 
 variable "manual_production_deploy" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "production_plan" {
-  type = bool
+  type    = bool
   default = false
 }
-variable "codestar_connection_arn"{ 
+variable "codestar_connection_arn" {
   type = string
-  }
+}
