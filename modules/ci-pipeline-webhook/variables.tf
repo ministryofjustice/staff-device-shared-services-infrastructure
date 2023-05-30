@@ -10,10 +10,6 @@ variable "github_repo_name" {
   type = string
 }
 
-variable "github_organisation_name" {
-  type = string
-}
-
 variable "git_branch_name" {
   type = string
 }

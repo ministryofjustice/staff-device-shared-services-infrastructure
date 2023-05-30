@@ -189,10 +189,6 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 EOF
 }
 
-data "aws_ssm_parameter" "github_oauth_token" {
-  name = "/ci/github-oauth-token"
-}
-
 locals {
   s3_bucket_arns = [
     aws_s3_bucket.artifacts.arn,
