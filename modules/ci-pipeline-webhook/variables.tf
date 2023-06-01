@@ -6,11 +6,7 @@ variable "subnet_ids" {
   type = list(string)
 }
 
-variable "github_repo_name" {
-  type = string
-}
-
-variable "github_organisation_name" {
+variable "github_repo_id" {
   type = string
 }
 
@@ -60,4 +56,7 @@ variable "manual_production_deploy" {
 variable "production_plan" {
   type    = bool
   default = false
+}
+variable "codestar_connection_arn" {
+  type = string
 }

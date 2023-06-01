@@ -3,7 +3,7 @@ data "aws_vpc" "default" {
 }
 
 data "aws_subnet_ids" "default" {
-  vpc_id            = data.aws_vpc.default.id
+  vpc_id = data.aws_vpc.default.id
 }
 
 data "aws_subnet" "default" {
@@ -30,8 +30,8 @@ resource "aws_cloudwatch_log_group" "logging_heartbeat_production" {
 }
 
 resource "aws_instance" "logging_heartbeat" {
-  ami           = "ami-032598fcc7e9d1c7a"
-  instance_type = "t2.micro"
+  ami                         = "ami-032598fcc7e9d1c7a"
+  instance_type               = "t2.micro"
   subnet_id                   = data.aws_subnet.default[0].id
   monitoring                  = true
   associate_public_ip_address = true
