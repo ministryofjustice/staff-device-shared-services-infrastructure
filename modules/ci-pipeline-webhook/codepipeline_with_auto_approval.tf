@@ -25,7 +25,7 @@ resource "aws_codepipeline" "codepipeline" {
 
       configuration = {
         ConnectionArn    = var.codestar_connection_arn
-        FullRepositoryId = var.github_repo_name
+        FullRepositoryId = var.github_repo_id
         BranchName       = var.git_branch_name
       }
     }

@@ -287,7 +287,7 @@ module "staff-infrastructure-network-services" {
 module "staff-infrastructure-smtp-relay-server" {
   source                   = "./modules/ci-pipeline-webhook"
   service_name             = "core"
-  github_repo_name         = "ministryofjustice/staff-infrastructure-smtp-relay-server"
+  github_repo_id           = "ministryofjustice/staff-infrastructure-smtp-relay-server"
   git_branch_name          = "main"
   name                     = "staff-infrastructure-smtp-relay-server"
   prefix_name              = "${module.label.id}-smtp-relay"
