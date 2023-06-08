@@ -160,17 +160,15 @@ module "pttp-infrastructure-ci-pipeline-dns-container" {
 
 
 module "staff-device-private-dns-zone" {
-  github_repo_name         = "staff-device-private-dns-zone"
-  source                   = "./modules/ci-pipeline"
-  github_organisation_name = "ministryofjustice"
-  git_branch_name          = "main"
-  service_name             = "core"
-
-  name        = "staff-device-private-dns-zone"
-  prefix_name = "${module.label.id}-pvt-dns"
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  source                  = "./modules/ci-pipeline-webhook"
+  github_repo_id          = "ministryofjustice/staff-device-private-dns-zone"
+  git_branch_name         = "main"
+  service_name            = "core"
+  name                    = "staff-device-private-dns-zone"
+  prefix_name             = "${module.label.id}-pvt-dns"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
