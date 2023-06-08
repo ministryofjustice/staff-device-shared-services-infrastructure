@@ -49,6 +49,7 @@ module "label" {
   }
 }
 
+# TODO this pipeline is in failed status, resolve before changing.
 module "pttp-infrastructure-ci-pipeline" {
   source                   = "./modules/ci-pipeline"
   service_name             = "core"
