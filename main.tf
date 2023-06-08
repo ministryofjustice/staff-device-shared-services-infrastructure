@@ -102,6 +102,7 @@ module "pttp-infrastructure-ci-pipeline-dhcp-container" {
   privileged_mode = true
 }
 
+# TODO this pipeline is in failed status, resolve before changing.
 module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
   source                   = "./modules/ci-pipeline"
   service_name             = "core"
