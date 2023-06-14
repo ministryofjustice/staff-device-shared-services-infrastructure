@@ -51,14 +51,13 @@ module "label" {
 
 # TODO this pipeline is in failed status, resolve before changing.
 module "pttp-infrastructure-ci-pipeline" {
-  source                   = "./modules/ci-pipeline"
+  source                   = "./modules/ci-pipeline-webhook"
   service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-device-logging-infrastructure"
+  github_repo_id           = "ministryofjustice/staff-device-logging-infrastructure"
   git_branch_name          = "main"
-
   name                     = "Staff-Device-Logging"
   prefix_name              = module.label.id
+  codestar_connection_arn  = aws_codestarconnections_connection.staff-infrastructure-moj.id
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
   manual_production_deploy = true
