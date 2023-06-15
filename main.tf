@@ -49,15 +49,15 @@ module "label" {
   }
 }
 
+# TODO this pipeline is in failed status, resolve before changing.
 module "pttp-infrastructure-ci-pipeline" {
-  source                   = "./modules/ci-pipeline"
+  source                   = "./modules/ci-pipeline-webhook"
   service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-device-logging-infrastructure"
+  github_repo_id           = "ministryofjustice/staff-device-logging-infrastructure"
   git_branch_name          = "main"
-
   name                     = "Staff-Device-Logging"
   prefix_name              = module.label.id
+  codestar_connection_arn  = aws_codestarconnections_connection.staff-infrastructure-moj.id
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
   manual_production_deploy = true
@@ -68,16 +68,15 @@ module "pttp-infrastructure-ci-pipeline" {
 }
 
 module "pttp-infrastructure-ci-pipeline-dns-dhcp" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-device-dns-dhcp-infrastructure"
-  git_branch_name          = "main"
-
-  name        = "Staff-Device-DNS-DHCP-Infrastructure"
-  prefix_name = "${module.label.id}-dns-dhcp"
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
+  source                  = "./modules/ci-pipeline-webhook"
+  service_name            = "core"
+  github_repo_id          = "ministryofjustice/staff-device-dns-dhcp-infrastructure"
+  git_branch_name         = "main"
+  name                    = "Staff-Device-DNS-DHCP-Infrastructure"
+  prefix_name             = "${module.label.id}-dns-dhcp"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
@@ -85,16 +84,15 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp" {
 }
 
 module "pttp-infrastructure-ci-pipeline-dhcp-container" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-device-dhcp-server"
-  git_branch_name          = "main"
-
-  name        = "Staff-Device-DHCP-Server"
-  prefix_name = "${module.label.id}-kea-server"
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
+  source                  = "./modules/ci-pipeline-webhook"
+  service_name            = "core"
+  github_repo_id          = "ministryofjustice/staff-device-dhcp-server"
+  git_branch_name         = "main"
+  name                    = "Staff-Device-DHCP-Server"
+  prefix_name             = "${module.label.id}-kea-server"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
@@ -103,17 +101,17 @@ module "pttp-infrastructure-ci-pipeline-dhcp-container" {
   privileged_mode = true
 }
 
+# TODO this pipeline is in failed status, resolve before changing.
 module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-device-logging-syslog-to-cloudwatch"
-  git_branch_name          = "main"
-
-  name        = "Staff-Device-Logging-Syslog-To-Cloudwatch"
-  prefix_name = "${module.label.id}-log-syslog"
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
+  source                  = "./modules/ci-pipeline-webhook"
+  service_name            = "core"
+  github_repo_id          = "ministryofjustice/staff-device-logging-syslog-to-cloudwatch"
+  git_branch_name         = "main"
+  name                    = "Staff-Device-Logging-Syslog-To-Cloudwatch"
+  prefix_name             = "${module.label.id}-log-syslog"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
@@ -123,16 +121,15 @@ module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
 }
 
 module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-device-dns-dhcp-admin"
-  git_branch_name          = "main"
-
-  name        = "Staff-Device-Admin-Portal"
-  prefix_name = "${module.label.id}-admin"
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
+  source                  = "./modules/ci-pipeline-webhook"
+  service_name            = "core"
+  github_repo_id          = "ministryofjustice/staff-device-dns-dhcp-admin"
+  git_branch_name         = "main"
+  name                    = "Staff-Device-Admin-Portal"
+  prefix_name             = "${module.label.id}-admin"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
@@ -142,16 +139,15 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
 }
 
 module "pttp-infrastructure-ci-pipeline-dns-container" {
-  source                   = "./modules/ci-pipeline"
-  service_name             = "core"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "staff-device-dns-server"
-  git_branch_name          = "main"
-
-  name        = "Staff-Device-DNS-Server"
-  prefix_name = "${module.label.id}-dns-server"
-  vpc_id      = module.vpc.vpc_id
-  subnet_ids  = module.vpc.private_subnets
+  source                  = "./modules/ci-pipeline-webhook"
+  service_name            = "core"
+  github_repo_id          = "ministryofjustice/staff-device-dns-server"
+  git_branch_name         = "main"
+  name                    = "Staff-Device-DNS-Server"
+  prefix_name             = "${module.label.id}-dns-server"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
@@ -160,19 +156,17 @@ module "pttp-infrastructure-ci-pipeline-dns-container" {
   privileged_mode = true
 }
 
-
+# TODO this pipeline is internal requires Codestar connection debugging.
 module "staff-device-private-dns-zone" {
-  github_repo_name         = "staff-device-private-dns-zone"
   source                   = "./modules/ci-pipeline"
   github_organisation_name = "ministryofjustice"
+  github_repo_name         = "ministryofjustice/staff-device-private-dns-zone"
   git_branch_name          = "main"
   service_name             = "core"
-
-  name        = "staff-device-private-dns-zone"
-  prefix_name = "${module.label.id}-pvt-dns"
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  name                     = "staff-device-private-dns-zone"
+  prefix_name              = "${module.label.id}-pvt-dns"
+  vpc_id                   = module.vpc.vpc_id
+  subnet_ids               = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
@@ -182,19 +176,17 @@ module "staff-device-private-dns-zone" {
 }
 
 module "network-access-control-infrastructure" {
-  github_repo_name         = "network-access-control-infrastructure"
-  source                   = "./modules/ci-pipeline"
-  github_organisation_name = "ministryofjustice"
+  source                   = "./modules/ci-pipeline-webhook"
+  github_repo_id           = "ministryofjustice/network-access-control-infrastructure"
   git_branch_name          = "main"
   service_name             = "core"
   manual_production_deploy = true
   production_plan          = true
-
-  name        = "network-access-control-infrastructure"
-  prefix_name = "${module.label.id}-nac"
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  name                     = "network-access-control-infrastructure"
+  prefix_name              = "${module.label.id}-nac"
+  codestar_connection_arn  = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                   = module.vpc.vpc_id
+  subnet_ids               = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
@@ -202,19 +194,18 @@ module "network-access-control-infrastructure" {
 }
 
 module "network-access-control-server" {
-  github_repo_name         = "network-access-control-server"
-  source                   = "./modules/ci-pipeline"
-  github_organisation_name = "ministryofjustice"
+  source                   = "./modules/ci-pipeline-webhook"
+  github_repo_id           = "ministryofjustice/network-access-control-server"
   git_branch_name          = "main"
   service_name             = "core"
   docker_image             = "aws/codebuild/standard:5.0"
   manual_production_deploy = true
 
-  name        = "network-access-control-server"
-  prefix_name = "${module.label.id}-nac-server"
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  name                    = "network-access-control-server"
+  prefix_name             = "${module.label.id}-nac-server"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
@@ -224,19 +215,18 @@ module "network-access-control-server" {
 }
 
 module "network-access-control-admin" {
-  github_repo_name         = "network-access-control-admin"
-  source                   = "./modules/ci-pipeline"
-  github_organisation_name = "ministryofjustice"
+  source                   = "./modules/ci-pipeline-webhook"
+  github_repo_id           = "ministryofjustice/network-access-control-admin"
   git_branch_name          = "main"
   service_name             = "core"
   docker_image             = "aws/codebuild/standard:5.0"
   manual_production_deploy = true
 
-  name        = "network-access-control-admin"
-  prefix_name = "${module.label.id}-nac-admin"
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  name                    = "network-access-control-admin"
+  prefix_name             = "${module.label.id}-nac-admin"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
@@ -245,6 +235,7 @@ module "network-access-control-admin" {
   privileged_mode = true
 }
 
+# TODO this pipeline is internal requires Codestar connection debugging.
 module "staff-infrastructure-network-services" {
   source                   = "./modules/ci-pipeline"
   service_name             = "core"
@@ -264,15 +255,15 @@ module "staff-infrastructure-network-services" {
 }
 
 module "staff-infrastructure-smtp-relay-server" {
-  source                   = "./modules/ci-pipeline-webhook"
-  service_name             = "core"
-  github_repo_id           = "ministryofjustice/staff-infrastructure-smtp-relay-server"
-  git_branch_name          = "main"
-  name                     = "staff-infrastructure-smtp-relay-server"
-  prefix_name              = "${module.label.id}-smtp-relay"
-  codestar_connection_arn  = aws_codestarconnections_connection.staff-infrastructure-moj.id
-  vpc_id                   = module.vpc.vpc_id
-  subnet_ids               = module.vpc.private_subnets
+  source                  = "./modules/ci-pipeline-webhook"
+  service_name            = "core"
+  github_repo_id          = "ministryofjustice/staff-infrastructure-smtp-relay-server"
+  git_branch_name         = "main"
+  name                    = "staff-infrastructure-smtp-relay-server"
+  prefix_name             = "${module.label.id}-smtp-relay"
+  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                  = module.vpc.vpc_id
+  subnet_ids              = module.vpc.private_subnets
 
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
