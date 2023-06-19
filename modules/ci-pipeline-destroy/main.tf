@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "artifacts" {
 resource "aws_s3_bucket" "client-tf-state" {
   bucket        = "${var.prefix_name}-client-${var.service_name}-tf-state"
   acl           = "private"
-  force_destroy = false
+  force_destroy = true
 
   server_side_encryption_configuration {
     rule {
@@ -28,7 +28,7 @@ resource "aws_s3_bucket" "client-tf-state" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 

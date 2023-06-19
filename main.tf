@@ -156,7 +156,7 @@ module "pttp-infrastructure-ci-pipeline-dns-container" {
   privileged_mode = true
 }
 
-TODO this pipeline is internal requires Codestar connection debugging.
+#TODO this pipeline is internal requires Codestar connection debugging.
 module "staff-device-private-dns-zone" {
   source                   = "./modules/ci-pipeline-destroy"
   github_organisation_name = "ministryofjustice"
