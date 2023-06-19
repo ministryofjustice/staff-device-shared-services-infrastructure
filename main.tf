@@ -156,25 +156,6 @@ module "pttp-infrastructure-ci-pipeline-dns-container" {
   privileged_mode = true
 }
 
-#TODO this pipeline is internal requires Codestar connection debugging.
-module "staff-device-private-dns-zone" {
-  source                   = "./modules/ci-pipeline-destroy"
-  github_organisation_name = "ministryofjustice"
-  github_repo_name         = "ministryofjustice/staff-device-private-dns-zone"
-  git_branch_name          = "main"
-  service_name             = "core"
-  name                     = "staff-device-private-dns-zone"
-  prefix_name              = "${module.label.id}-pvt-dns"
-  vpc_id                   = module.vpc.vpc_id
-  subnet_ids               = module.vpc.private_subnets
-
-  dev_assume_role_arn            = var.dev_assume_role_arn
-  production_assume_role_arn     = var.production_assume_role_arn
-  pre_production_assume_role_arn = var.pre_production_assume_role_arn
-
-  privileged_mode = true
-}
-
 module "network-access-control-infrastructure" {
   source                   = "./modules/ci-pipeline-webhook"
   github_repo_id           = "ministryofjustice/network-access-control-infrastructure"
