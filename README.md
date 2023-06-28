@@ -2,7 +2,7 @@
 
 # MoJ Official Shared Services Infrastructure
 
-This creates the shared infrastructure for the main account, named Shared Services. This account is used to host CI/CD pipelines.
+This creates the shared infrastructure for the main account, named Shared Services. This account is used to host AWS CodePipeline CI/CD pipelines, for new CI/CD use [GitHub Actions](#CI-CD-with-GitHub-Actions) as per [ADR 011][ADR 011].
 
 For the code that creates infrastructure for each environment please see [this repository](https://github.com/ministryofjustice/staff-device-logging-infrastructure), as an example.
 
@@ -163,3 +163,57 @@ production_plan
 
 This option adds stage where changes to infrastructure can be inspected before applying. Typically used in combination with the `manual_production_deploy`. This will set an environment variable on the stage of `PLAN="true"`.
 Buildspec files can be modified to look for the existence of this variable to do either a `terraform plan` or `terraform apply`.
+
+## CI CD with GitHub Actions
+
+We have the following repository which we use for [shared Actions](https://github.com/ministryofjustice/nvvs-devops-github-actions).
+
+Following table displays all the repositories [nvvs-devops-admins](https://github.com/orgs/ministryofjustice/teams/nvvs-devops-admins) GithUb team have access to 
+
+| Owner                  |REPO NAME                                          | AWS/Github       |Description  |
+|------                  |---------                                          |-----------       |--------- 
+| operations-engineering |aws-root-account                                   | Github           |Terraform for the Ministry of Justice AWS root account   |
+| Gary H                 |aws-ta-testing                                     | Delete?          |Terraform for testing|                                 
+| nvvs-devops-admins     |aws-trusted-advisor-to-github-issues               | Github           | Automates creation of GitHub Issues from AWS Trusted Advisor checks|
+| nvvs-devops-admins     |cloud-operations-slack-bot                         | Github           | Official Slack bot app for Cloud Operations team Slack channel |
+| nvvs-devops-admins     |deployment-tgw                                     | Manual?          |   |                                
+| nvvs-devops-admins     |mojo-aws-github-oidc-provider                      | Manual?          |To manage GitHub AWS OpenID Connector provider on MoJO AWS Shared Services account.|
+| nvvs-devops-admins     |network-access-control-admin                       | AWS CodePipeline |Self service admin portal for the Network Access Control Service |
+| nvvs-devops-admins     |network-access-control-disaster-recovery           | Manual?          |Rollback scripts for S3 configuration and ECR containers|
+| nvvs-devops-admins     |network-access-control-infrastructure              | AWS CodePipeline |Terraform infrastructure for the 802.1x Network Access Control Service|
+| nvvs-devops-admins     |network-access-control-integration-tests           | Manual?          |Integration tests for the Network Access Control Service|
+| nvvs-devops-admins     |network-access-control-server                      | AWS CodePipeline |FreeRadius server for the 802.1x Network Access Control Service|
+| nvvs-devops-admins     |nvvs-devops                                        | Github           |Documentation for the NVVS DevOps Team|
+| nvvs-devops-admins     |nvvs-devops-github-actions                         | Github           |Used for Workflow GitHub actions from other repositories|
+| nvvs-devops-admins     |nvvs-devops-monitor                                | Github           |Terraform to create new VPC and EKS Cluster for the MoJO IMA|
+| nvvs-devops-admins     |PaloAlto-pipelines                                 | Manual ??        |Terraform configuration to manage AWS CodePipelines |
+| nvvs-devops-admins     |provision-ubuntu2004-on-wsl2                       | Manual (y)       |Automating provisoning ubuntu 20.04 with Ansible on WSL 2|
+| nvvs-devops-admins     |staff-device-dhcp-server                           | AWS CodePipeline |The ISC KEA server for serving DHCP requests (via a Docker image)|
+| nvvs-devops-admins     |staff-device-dns-dhcp-admin                        | AWS CodePipeline |Web frontend for managing Staff Device DNS / DHCP servers|
+| nvvs-devops-admins     |staff-device-dns-dhcp-disaster-recovery            | Manual ?         |Disaster recovery script for DNS and DHCP services.|
+| nvvs-devops-admins     |staff-device-dns-dhcp-infrastructure               | AWS CodePipeline |Staff Device DHCP and DNS Terraform infrastructure|
+| nvvs-devops-admins     |staff-device-dns-server                            | AWS CodePipeline |Staff Device DNS Server repository|
+| nvvs-devops-admins     |staff-device-logging-dns-dhcp-integration-tests    | Manual (y)       |Remote full stack integration tests currently run from Corsham test site. Services being |tested include Security Logging, DHCP and DNS.|
+| nvvs-devops-admins     |staff-device-logging-infrastructure                | AWS CodePipeline |Log proxy and forwarding infrastructure|
+| nvvs-devops-admins     |staff-device-logging-syslog-to-cloudwatch          | AWS CodePipeline |Docker container to forward syslog events to CloudWatch|
+| nvvs-devops-admins     |staff-device-management-intune-scripts             | ??               |Scripts that are deployed to run on MoJ OFFICIAL devices managed through Microsoft Intune|
+| nvvs-devops-admins     |staff-device-private-dns-zone                      | Github           |This repository contains the Terraform code to create and maintain private DNS zones in AWS Route 53.|
+| nvvs-devops-admins     |staff-device-shared-services-infrastructure        | Manual           |Staff Device AWS Infrastructure for build pipelines|
+| nvvs-devops-admins     |staff-infrastructure-admin-sso                     | Not Applicable   |Terraform management of AzureAD Users and Groups for staff management services|
+| nvvs-devops-admins     |staff-infrastructure-certificate-services          | Github           |Infrastructure to support Public Key Infrastructure for devices users and applications|
+| nvvs-devops-admins     |staff-infrastructure-metric-aggregation-server     | Github           |This repository is for building our custom prometheus docker image with all the required config to pull data from our collectors |
+| nvvs-devops-admins     |staff-infrastructure-metric-aggregator-cloud       | Not Applicable   |Prometheus server for AWS Cloudwatch and Azure Monitor Exporters|
+| nvvs-devops-admins     |staff-infrastructure-monitoring-app-reachability   | Github           |Lightweight all-in-one docker image for monitoring http endpoints and shipping metrics back to a central prometheus over the internet.|
+| nvvs-devops-admins     |staff-infrastructure-monitoring-blackbox-exporter  | Manual ??        |This project is part of the Infrastructure Monitoring and Alerting (IMA) Platform. It holds the Docker image for pulling data from the Physical Devices.|
+| nvvs-devops-admins     |staff-infrastructure-monitoring-dns-reachability   | Manual ??        |To monitor MoJ Official DNS|
+| nvvs-devops-admins     |staff-infrastructure-monitoring-snmpexporter       | Manual ??        |This is an exporter that exposes information gathered from SNMP to be scraped by Prometheus.|
+| nvvs-devops-admins     |staff-infrastructure-network-operations            | Manual ??        |Repository for Network Operations Centre tooling|
+| nvvs-devops-admins     |staff-infrastructure-network-services              | AWS CodePipeline |This repository deploys the underlying base infrastructure for several network based services for staff devices and applications in a single VPC in AWS.|
+| nvvs-devops-admins     |staff-infrastructure-smtp-relay-server             | AWS CodePipeline |This repository builds the docker image for the SMTP Relay server and pushes it to the Shared Services Elastic Container Repository|
+| nvvs-devops-admins     |staff-technology-services-github-teams             | Github           |To define and maintain some GitHub teams for Technology Services in Code using Terraform.|
+| nvvs-devops-admins     |tech-docs-monitor                                  | Github           |Part of alphagov/tech-docs-template (issues 👉https://github.com/alphagov/tech-docs-template/issues)|
+| nvvs-devops-admins     |terraform-panorama-config                          | Manual ??        | |
+| nvvs-devops-admins     |transit-gateways                                   | Manual ??        | |
+
+
+[ADR 011]: https://ministryofjustice.github.io/nvvs-devops/documentation/adrs/011-use-github-actions-for-ci-cd.html#011-use-github-actions-for-ci-cd
