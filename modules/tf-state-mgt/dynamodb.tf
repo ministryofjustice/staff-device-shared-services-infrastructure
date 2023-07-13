@@ -6,6 +6,10 @@ resource "aws_dynamodb_table" "dynamodb_terraform_state_lock" {
     name = "LockID"
     type = "S"
   }
+
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 2
+  write_capacity = 2
 }
 
 resource "aws_appautoscaling_target" "dynamodb_table_read_target" {
