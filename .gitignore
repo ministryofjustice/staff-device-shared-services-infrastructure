@@ -41,3 +41,6 @@ VpnCerts
 **/pki/*
 *.DS_Store
 .terraform.back
+
+# ignore tfenv pinned version file
+.terraform-version
