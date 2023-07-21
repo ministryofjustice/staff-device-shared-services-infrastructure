@@ -12,21 +12,21 @@ data "aws_subnet" "default" {
 }
 
 resource "aws_cloudwatch_log_group" "logging_heartbeat_pre_production" {
-  name = "logging-heartbeat-pre-production"
-
-  tags = var.tags
+  name              = "logging-heartbeat-pre-production"
+  retention_in_days = var.retention_in_days
+  tags              = var.tags
 }
 
 resource "aws_cloudwatch_log_group" "logging_heartbeat_development" {
-  name = "logging-heartbeat-development"
-
-  tags = var.tags
+  name              = "logging-heartbeat-development"
+  retention_in_days = var.retention_in_days
+  tags              = var.tags
 }
 
 resource "aws_cloudwatch_log_group" "logging_heartbeat_production" {
-  name = "logging-heartbeat-production"
-
-  tags = var.tags
+  name              = "logging-heartbeat-production"
+  retention_in_days = var.retention_in_days
+  tags              = var.tags
 }
 
 resource "aws_instance" "logging_heartbeat" {
