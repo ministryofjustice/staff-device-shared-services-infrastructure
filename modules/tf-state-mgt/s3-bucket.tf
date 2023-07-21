@@ -5,6 +5,10 @@ resource "aws_s3_bucket" "client-tf-state" {
   lifecycle {
     prevent_destroy = true
   }
+
+  tags = merge(local.tags, {
+    Name = "${var.prefix_name}-client-${var.service_name}-tf-state"
+  })
 }
 
 resource "aws_s3_bucket_public_access_block" "client-tf-state" {

@@ -10,6 +10,10 @@ resource "aws_dynamodb_table" "dynamodb_terraform_state_lock" {
   billing_mode   = "PROVISIONED"
   read_capacity  = 1
   write_capacity = 1
+
+  tags = merge(local.tags, {
+    Name = "${var.prefix_name}-client-${var.service_name}-tf-lock-table"
+  })
 }
 
 resource "aws_appautoscaling_target" "dynamodb_table_read_target" {
