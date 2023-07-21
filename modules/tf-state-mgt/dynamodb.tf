@@ -8,8 +8,8 @@ resource "aws_dynamodb_table" "dynamodb_terraform_state_lock" {
   }
 
   billing_mode   = "PROVISIONED"
-  read_capacity  = 2
-  write_capacity = 2
+  read_capacity  = 1
+  write_capacity = 1
 }
 
 resource "aws_appautoscaling_target" "dynamodb_table_read_target" {
