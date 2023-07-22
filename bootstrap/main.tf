@@ -4,7 +4,7 @@ terraform {
 
 provider "aws" {
   region  = "eu-west-2"
-  version = "~> 2.52"
+  version = "~> 5.0"
 }
 
 module "label" {
