@@ -1,7 +1,6 @@
 module "vpc" {
-  # source  = "terraform-aws-modules/vpc/aws"
-  # version = "2.78.0"
-  source = "./modules/vpc"
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.1.0"
 
   name = module.label.id
 
