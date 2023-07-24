@@ -2,13 +2,37 @@ data "aws_vpc" "default" {
   default = true
 }
 
-data "aws_subnet_ids" "default" {
-  vpc_id = data.aws_vpc.default.id
+## Upgrade to AWS Provider 5.x required changes to the data source.
+## https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/version-5-upgrade#data-sourceaws_subnet_ids
+## Made required changes which resulted in the order of the subnets changing.
+## Discovered the ec2 instance is not deployed into the VPC created by the VPC module
+## Added a temporary tag to subnet to ensure not changes are applied.
+## Will investigate further if this is inntentional.
+
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+
+  filter {
+    name   = "tag:Test"
+    values = ["eu-west-2c"]
+  }
+}
+
+output "debug" {
+  value = {
+  vpc_id =data.aws_vpc.default.id
+   aws_subnets = data.aws_subnets.default
+   aws_subnet = data.aws_subnet.default
+   subnet_id = data.aws_subnet.default[0].id
+  }
 }
 
 data "aws_subnet" "default" {
-  count = length(data.aws_subnet_ids.default.ids)
-  id    = tolist(data.aws_subnet_ids.default.ids)[count.index]
+  count = length(data.aws_subnets.default.ids)
+  id    = tolist(data.aws_subnets.default.ids)[count.index]
 }
 
 resource "aws_cloudwatch_log_group" "logging_heartbeat_pre_production" {
