@@ -14,6 +14,8 @@ module "network-access-control-infrastructure" {
   dev_assume_role_arn            = var.dev_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
+
+  tags = module.label.tags
 }
 
 module "network-access-control-server" {
@@ -35,6 +37,7 @@ module "network-access-control-server" {
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
 
   privileged_mode = true
+  tags            = module.label.tags
 }
 
 module "network-access-control-admin" {
@@ -56,4 +59,5 @@ module "network-access-control-admin" {
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
 
   privileged_mode = true
+  tags            = module.label.tags
 }
