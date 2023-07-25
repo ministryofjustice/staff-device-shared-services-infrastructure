@@ -31,6 +31,11 @@ resource "aws_codebuild_project" "development" {
   source {
     type = "CODEPIPELINE"
   }
+
+  tags = merge(local.tags, {
+    Environment = "development"
+    Name        = "${var.prefix_name}-${var.service_name}-development"
+  })
 }
 
 resource "aws_codebuild_project" "pre-production" {
@@ -66,6 +71,11 @@ resource "aws_codebuild_project" "pre-production" {
   source {
     type = "CODEPIPELINE"
   }
+
+  tags = merge(local.tags, {
+    Environment = "pre-production"
+    Name        = "${var.prefix_name}-${var.service_name}-pre-production"
+  })
 }
 
 resource "aws_codebuild_project" "test" {
@@ -102,6 +112,11 @@ resource "aws_codebuild_project" "test" {
     type      = "CODEPIPELINE"
     buildspec = "buildspec.test.yml"
   }
+
+  tags = merge(local.tags, {
+    Environment = "test"
+    Name        = "${var.prefix_name}-${var.service_name}-test"
+  })
 }
 
 resource "aws_codebuild_project" "plan_production" {
@@ -142,6 +157,11 @@ resource "aws_codebuild_project" "plan_production" {
   source {
     type = "CODEPIPELINE"
   }
+
+  tags = merge(local.tags, {
+    Environment = "production"
+    Name        = "${var.prefix_name}-${var.service_name}-plan-production"
+  })
 }
 
 resource "aws_codebuild_project" "production" {
@@ -178,4 +198,9 @@ resource "aws_codebuild_project" "production" {
   source {
     type = "CODEPIPELINE"
   }
+
+  tags = merge(local.tags, {
+    Environment = "production"
+    Name        = "${var.prefix_name}-${var.service_name}-production"
+  })
 }
