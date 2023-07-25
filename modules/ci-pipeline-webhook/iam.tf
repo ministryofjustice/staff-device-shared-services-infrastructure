@@ -15,6 +15,10 @@ resource "aws_iam_role" "codepipeline_role" {
   ]
 }
 EOF
+
+  tags = merge(local.tags, {
+    Name = "${var.prefix_name}-${var.service_name}-codepipeline-role"
+  })
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
@@ -79,6 +83,7 @@ module "assume-role-dev" {
   prefix_name           = "${var.prefix_name}-${var.service_name}-dev"
   dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
   s3_bucket_arns        = local.s3_bucket_arns
+  tags                  = local.tags
 }
 
 module "assume-role-pre-production" {
@@ -87,6 +92,7 @@ module "assume-role-pre-production" {
   prefix_name           = "${var.prefix_name}-${var.service_name}-pre-prod"
   dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
   s3_bucket_arns        = local.s3_bucket_arns
+  tags                  = local.tags
 }
 
 module "ci-assume-role-production" {
@@ -95,4 +101,5 @@ module "ci-assume-role-production" {
   prefix_name           = "${var.prefix_name}-${var.service_name}-production"
   dynamo_db_locking_arn = aws_dynamodb_table.dynamodb_terraform_state_lock.arn
   s3_bucket_arns        = local.s3_bucket_arns
+  tags                  = local.tags
 }

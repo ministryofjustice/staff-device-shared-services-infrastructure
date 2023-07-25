@@ -15,6 +15,10 @@ resource "aws_iam_role" "this" {
   ]
 }
 EOF
+
+tags = merge(var.tags, {
+    Name = "${var.prefix_name}-codebuild-role"
+  })
 }
 
 resource "aws_iam_role_policy" "this" {
