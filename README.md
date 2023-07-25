@@ -14,10 +14,21 @@ This repository holds the Terraform code to create a [CodeBuild](https://aws.ama
 To apply the Terraform in this project using [AWS Vault](https://github.com/99designs/aws-vault) to authenticate:
 
 1. Install required Terraform version
+
+Check the current version in the `versions.tf` file look for `required_version` in the `terraform` block.
+
 ```
-tfenv install 1.1.7
-tfenv use 1.1.7
+tfenv install <version_number>
+tfenv use <version_number>
+tfenv pin
 ```
+
+Alternatively add the following alias to your `~/.bash_aliases` file and use that to set the required Terraform version.
+
+```
+alias tfenvuse='tfenv use $(cat versions.tf 2> /dev/null | grep required_version | cut -d "\"" -f 2) && tfenv pin'
+```
+
 
 2. Create a profile for the AWS Shared Services account, if not done so already
 ```
@@ -115,14 +126,6 @@ phases:
 To have a Pipeline for your own project with AWS CodePipeline / CodeBuild, you can execute the Terraform in this repository.
 
 Re-use the module `./modules/ci-pipeline` in the `main.tf` file to setup your own Pipeline. 
-
-An OAuth token is required to pull your source code from Github.
-
-Create an access token for your repository and add it to a `.tfvars` file in the root of the project.
-
-```shell script
-github_oauth_token = "abc123"
-```
 
 Run Terraform 
 
