@@ -1,3 +1,9 @@
+locals {
+  tags = merge(var.tags, {
+    resource-for-source-code = "https://github.com/${var.github_repo_id}"
+  })
+}
+
 resource "aws_s3_bucket" "artifacts" {
   bucket        = "${var.prefix_name}-build-artifact-bucket"
   acl           = "private"
