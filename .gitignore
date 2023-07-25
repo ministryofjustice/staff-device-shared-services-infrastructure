@@ -44,3 +44,6 @@ VpnCerts
 
 # ignore tfenv pinned version file
 .terraform-version
+
+# Terraform lockfile
+.terraform.lock.hcl

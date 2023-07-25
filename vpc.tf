@@ -1,6 +1,6 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.78.0"
+  version = "5.1.0"
 
   name = module.label.id
 
@@ -20,5 +20,10 @@ module "vpc" {
     cidrsubnet(local.cidr_block, 8, 3)
   ]
 
-  map_public_ip_on_launch = false
+  map_public_ip_on_launch       = false
+  manage_default_network_acl    = false
+  manage_default_route_table    = false
+  manage_default_security_group = false
+
+  tags = local.tags_minus_name
 }
