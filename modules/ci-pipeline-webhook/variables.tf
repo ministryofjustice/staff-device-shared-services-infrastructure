@@ -60,3 +60,7 @@ variable "production_plan" {
 variable "codestar_connection_arn" {
   type = string
 }
+
+variable "tags" {
+  type = map(string)
+}

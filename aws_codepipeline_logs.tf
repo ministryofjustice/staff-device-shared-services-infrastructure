@@ -13,6 +13,8 @@ module "pttp-infrastructure-ci-pipeline" {
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
+
+  tags = module.label.tags
 }
 
 module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
@@ -31,4 +33,5 @@ module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
   production_assume_role_arn     = var.production_assume_role_arn
 
   privileged_mode = true
+  tags            = module.label.tags
 }
