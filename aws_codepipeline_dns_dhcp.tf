@@ -12,6 +12,8 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp" {
   dev_assume_role_arn            = var.dev_assume_role_arn
   pre_production_assume_role_arn = var.pre_production_assume_role_arn
   production_assume_role_arn     = var.production_assume_role_arn
+
+  tags = module.label.tags
 }
 
 module "pttp-infrastructure-ci-pipeline-dns-container" {
@@ -30,6 +32,7 @@ module "pttp-infrastructure-ci-pipeline-dns-container" {
   production_assume_role_arn     = var.production_assume_role_arn
 
   privileged_mode = true
+  tags            = module.label.tags
 }
 
 module "pttp-infrastructure-ci-pipeline-dhcp-container" {
@@ -48,6 +51,7 @@ module "pttp-infrastructure-ci-pipeline-dhcp-container" {
   production_assume_role_arn     = var.production_assume_role_arn
 
   privileged_mode = true
+  tags            = module.label.tags
 }
 
 module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
@@ -66,4 +70,5 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
   production_assume_role_arn     = var.production_assume_role_arn
 
   privileged_mode = true
+  tags            = module.label.tags
 }

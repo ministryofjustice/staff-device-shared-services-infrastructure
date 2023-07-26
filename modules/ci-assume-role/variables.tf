@@ -10,3 +10,7 @@ variable "dynamo_db_locking_arn" {
 variable "s3_bucket_arns" {
   type = list(string)
 }
+
+variable "tags" {
+  type = map(string)
+}
