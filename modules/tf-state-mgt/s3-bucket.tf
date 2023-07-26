@@ -21,7 +21,7 @@ resource "aws_s3_bucket_public_access_block" "client-tf-state" {
 
 resource "aws_s3_bucket_acl" "client-tf-state" {
   depends_on = [
-	aws_s3_bucket_public_access_block.client-tf-state
+    aws_s3_bucket_public_access_block.client-tf-state
   ]
 
   bucket = aws_s3_bucket.client-tf-state.id

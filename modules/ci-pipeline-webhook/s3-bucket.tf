@@ -31,7 +31,7 @@ resource "aws_s3_bucket_public_access_block" "artifacts" {
 
 resource "aws_s3_bucket_acl" "artifacts" {
   depends_on = [
-	aws_s3_bucket_public_access_block.artifacts
+    aws_s3_bucket_public_access_block.artifacts
   ]
 
   bucket = aws_s3_bucket.artifacts.id
@@ -73,7 +73,7 @@ resource "aws_s3_bucket_public_access_block" "client-tf-state" {
 
 resource "aws_s3_bucket_acl" "client-tf-state" {
   depends_on = [
-	aws_s3_bucket_public_access_block.client-tf-state
+    aws_s3_bucket_public_access_block.client-tf-state
   ]
 
   bucket = aws_s3_bucket.client-tf-state.id
