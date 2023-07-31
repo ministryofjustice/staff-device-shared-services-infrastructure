@@ -11,17 +11,24 @@ resource "aws_s3_bucket" "client-tf-state" {
 }
 
 resource "aws_s3_bucket_public_access_block" "client-tf-state" {
-  bucket = aws_s3_bucket.client-tf-state.bucket
+  bucket = aws_s3_bucket.client-tf-state.id
 
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
+resource "aws_s3_bucket_ownership_controls" "client-tf-state" {
+  bucket = aws_s3_bucket.client-tf-state.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
 
 resource "aws_s3_bucket_acl" "client-tf-state" {
   depends_on = [
-    aws_s3_bucket_public_access_block.client-tf-state
+    aws_s3_bucket_public_access_block.client-tf-state,
+    aws_s3_bucket_ownership_controls.client-tf-state
   ]
 
   bucket = aws_s3_bucket.client-tf-state.id

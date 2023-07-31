@@ -64,10 +64,10 @@ resource "aws_s3_bucket_policy" "cloudtrail_bucket" {
   policy = element(data.template_file.s3_bucket_policies.*.rendered, 0)
 }
 
-resource "aws_s3control_bucket_lifecycle_configuration" "cloudtrail_bucket" {
+resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail_bucket" {
   count = local.cloudtrail_log_shipping_to_cloudwatch_count
 
-  bucket = element(aws_s3_bucket.cloudtrail_bucket.*.arn, 0)
+  bucket = element(aws_s3_bucket.cloudtrail_bucket.*.id, 0)
 
   rule {
     id     = "removal"

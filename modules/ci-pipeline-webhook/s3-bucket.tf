@@ -29,9 +29,17 @@ resource "aws_s3_bucket_public_access_block" "artifacts" {
   restrict_public_buckets = true
 }
 
+resource "aws_s3_bucket_ownership_controls" "artifacts" {
+  bucket = aws_s3_bucket.artifacts.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
 resource "aws_s3_bucket_acl" "artifacts" {
   depends_on = [
-    aws_s3_bucket_public_access_block.artifacts
+    aws_s3_bucket_public_access_block.artifacts,
+    aws_s3_bucket_ownership_controls.artifacts
   ]
 
   bucket = aws_s3_bucket.artifacts.id
@@ -71,9 +79,17 @@ resource "aws_s3_bucket_public_access_block" "client-tf-state" {
   restrict_public_buckets = true
 }
 
+resource "aws_s3_bucket_ownership_controls" "client-tf-state" {
+  bucket = aws_s3_bucket.client-tf-state.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
 resource "aws_s3_bucket_acl" "client-tf-state" {
   depends_on = [
-    aws_s3_bucket_public_access_block.client-tf-state
+    aws_s3_bucket_public_access_block.client-tf-state,
+    aws_s3_bucket_ownership_controls.client-tf-state
   ]
 
   bucket = aws_s3_bucket.client-tf-state.id
