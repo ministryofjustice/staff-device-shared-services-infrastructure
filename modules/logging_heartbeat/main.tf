@@ -23,10 +23,10 @@ data "aws_subnets" "default" {
 
 output "debug" {
   value = {
-  vpc_id =data.aws_vpc.default.id
-   aws_subnets = data.aws_subnets.default
-   aws_subnet = data.aws_subnet.default
-   subnet_id = data.aws_subnet.default[0].id
+    vpc_id      = data.aws_vpc.default.id
+    aws_subnets = data.aws_subnets.default
+    aws_subnet  = data.aws_subnet.default
+    subnet_id   = data.aws_subnet.default[0].id
   }
 }
 
