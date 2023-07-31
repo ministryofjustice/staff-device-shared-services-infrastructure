@@ -53,24 +53,41 @@ resource "aws_s3_bucket" "cloudtrail_bucket" {
 
   bucket        = local.cloud_trail_bucket_name
   force_destroy = true
-  policy        = element(data.template_file.s3_bucket_policies.*.rendered, 0)
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = element(aws_kms_key.cloudtrail_kms_key.*.arn, 0)
-        sse_algorithm     = "aws:kms"
-      }
-    }
-  }
+  tags = var.tags
+}
 
-  lifecycle_rule {
-    enabled = true
+resource "aws_s3_bucket_policy" "cloudtrail_bucket" {
+  count = local.cloudtrail_log_shipping_to_cloudwatch_count
+
+  bucket = element(aws_s3_bucket.cloudtrail_bucket.*.id, 0)
+  policy = element(data.template_file.s3_bucket_policies.*.rendered, 0)
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail_bucket" {
+  count = local.cloudtrail_log_shipping_to_cloudwatch_count
+
+  bucket = element(aws_s3_bucket.cloudtrail_bucket.*.id, 0)
+
+  rule {
+    id     = "removal"
+    status = "Enabled"
 
     expiration {
       days = 7
     }
   }
+}
 
-  tags = var.tags
+resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail_bucket" {
+  count = local.cloudtrail_log_shipping_to_cloudwatch_count
+
+  bucket = element(aws_s3_bucket.cloudtrail_bucket.*.id, 0)
+
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = element(aws_kms_key.cloudtrail_kms_key.*.arn, 0)
+      sse_algorithm     = "aws:kms"
+    }
+  }
 }
