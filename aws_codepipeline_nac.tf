@@ -11,9 +11,9 @@ module "network-access-control-infrastructure" {
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
 
-  dev_assume_role_arn            = var.dev_assume_role_arn
-  production_assume_role_arn     = var.production_assume_role_arn
-  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+  dev_assume_role_arn            = local.dev_assume_role_arn
+  production_assume_role_arn     = local.production_assume_role_arn
+  pre_production_assume_role_arn = local.pre_production_assume_role_arn
 
   tags = module.label.tags
 }
@@ -32,9 +32,9 @@ module "network-access-control-server" {
   vpc_id                  = module.vpc.vpc_id
   subnet_ids              = module.vpc.private_subnets
 
-  dev_assume_role_arn            = var.dev_assume_role_arn
-  production_assume_role_arn     = var.production_assume_role_arn
-  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+  dev_assume_role_arn            = local.dev_assume_role_arn
+  production_assume_role_arn     = local.production_assume_role_arn
+  pre_production_assume_role_arn = local.pre_production_assume_role_arn
 
   privileged_mode = true
   tags            = module.label.tags
@@ -54,9 +54,9 @@ module "network-access-control-admin" {
   vpc_id                  = module.vpc.vpc_id
   subnet_ids              = module.vpc.private_subnets
 
-  dev_assume_role_arn            = var.dev_assume_role_arn
-  production_assume_role_arn     = var.production_assume_role_arn
-  pre_production_assume_role_arn = var.pre_production_assume_role_arn
+  dev_assume_role_arn            = local.dev_assume_role_arn
+  production_assume_role_arn     = local.production_assume_role_arn
+  pre_production_assume_role_arn = local.pre_production_assume_role_arn
 
   privileged_mode = true
   tags            = module.label.tags

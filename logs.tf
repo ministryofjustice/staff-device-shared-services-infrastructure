@@ -4,7 +4,7 @@ module "log-forward" {
 
   subscriptions_config = {
     production = {
-      destination_arn = var.production_kinesis_destination_arn,
+      destination_arn = local.production_kinesis_destination_arn,
       log_groups = [
         "Panorama-Policy-as-Code-codepipeline-log-group",
         "Panorama-codepipeline-log-group",
@@ -27,13 +27,13 @@ module "log-forward" {
       ]
     },
     pre_production = {
-      destination_arn = var.pre_production_kinesis_destination_arn,
+      destination_arn = local.pre_production_kinesis_destination_arn,
       log_groups = [
         module.logging_heartbeat.pre_production_log_group_name
       ]
     },
     development = {
-      destination_arn = var.development_kinesis_destination_arn,
+      destination_arn = local.development_kinesis_destination_arn,
       log_groups = [
         module.logging_heartbeat.development_log_group_name
       ]
@@ -65,5 +65,5 @@ module "logging_heartbeat" {
 module "cloudwatch_exporter_role" {
   source = "./modules/cloudwatch_exporter_role"
 
-  production_account_id = var.production_account_id
+  production_account_id = local.production_account_id
 }
