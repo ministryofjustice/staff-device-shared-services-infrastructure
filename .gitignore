@@ -47,3 +47,6 @@ VpnCerts
 
 # Terraform lockfile
 .terraform.lock.hcl
+
+# script repporting results
+**/results/*
