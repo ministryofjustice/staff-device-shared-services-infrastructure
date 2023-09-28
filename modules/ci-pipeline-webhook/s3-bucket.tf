@@ -96,6 +96,13 @@ resource "aws_s3_bucket_acl" "client-tf-state" {
   acl    = "private"
 }
 
+resource "aws_s3_bucket_versioning" "client-tf-state" {
+  bucket = aws_s3_bucket.client-tf-state.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_server_side_encryption_configuration" "client-tf-state" {
   bucket = aws_s3_bucket.client-tf-state.id
 
