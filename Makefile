@@ -46,6 +46,9 @@ show:
 clean:
 	rm -rf .terraform/ terraform.tfstate*
 
+tfenv:
+	tfenv use $(cat versions.tf 2> /dev/null | grep required_version | cut -d "\"" -f 2 | cut -d " " -f 2) && tfenv pin
+
 get-secrets:
 	aws-vault exec $$AWS_VAULT_PROFILE -- sh ./scripts/get_secrets.sh
 
@@ -54,4 +57,5 @@ s3-audit:
 
 .PHONY:
 	fmt init workspace-list workspace-select validate plan-out plan \
-	refresh output apply state-list show destroy clean get-secrets s3-audit
+	refresh output apply state-list show destroy clean tfenv \
+	get-secrets s3-audit
