@@ -13,7 +13,7 @@ module "staff-device-private-dns-zone" {
 module "staff-devops-monitoring" {
   source         = "./modules/tf-state-mgt"
   service_name   = "monitoring-cluster"
-  prefix_name    = "${module.label_staff.id}"
+  prefix_name    = module.label_staff.id
   github_repo_id = "https://github.com/ministryofjustice/nvvs-devops-monitor"
   tags           = module.label_staff.tags
 

@@ -9,6 +9,6 @@ variable "owner-email" {
 }
 
 variable "enable_cloudtrail_log_shipping_to_cloudwatch" {
-  type = bool
+  type    = bool
   default = "true"
 }
