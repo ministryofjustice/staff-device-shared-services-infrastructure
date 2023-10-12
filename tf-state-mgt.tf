@@ -26,7 +26,7 @@ module "staff-github-teams" {
   source         = "./modules/tf-state-mgt"
   service_name   = "github-teams"
   prefix_name    = module.label_github_teams.id
-  github_repo_id = "https://github.com/ministryofjustice/staff-technology-services-github-teams.git"
+  github_repo_id = "https://github.com/ministryofjustice/staff-technology-services-github-teams"
   tags           = module.label_github_teams.tags
 
   dev_assume_role_arn            = local.dev_assume_role_arn
