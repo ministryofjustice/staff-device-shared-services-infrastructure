@@ -58,3 +58,23 @@ module "label_github_teams" {
     "source-code"      = "https://github.com/ministryofjustice/staff-device-shared-services-infrastructure"
   }
 }
+
+module "label_mojo_aws_github" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
+
+  namespace = "mojo"
+  stage     = terraform.workspace
+  name      = "aws-github"
+  delimiter = "-"
+
+  tags = {
+    "business-unit" = "MoJO"
+    "application"   = "pttp-shared-services-infrastructure",
+    "is-production" = tostring(var.is-production),
+    "owner"         = var.owner-email
+
+    "environment-name" = "global"
+    "source-code"      = "https://github.com/ministryofjustice/staff-device-shared-services-infrastructure"
+  }
+}
