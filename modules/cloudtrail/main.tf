@@ -28,7 +28,7 @@ resource "aws_cloudwatch_log_group" "cloudtrail_log_group" {
 
   name              = "${var.prefix}-cloudtrail-log-group"
   kms_key_id        = element(aws_kms_key.cloudtrail_kms_key.*.arn, 0)
-  retention_in_days = 7
+  retention_in_days = 90
 
   tags = var.tags
 }
