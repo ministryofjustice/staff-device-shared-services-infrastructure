@@ -8,8 +8,12 @@ resource "aws_iam_role" "this" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
+        "AWS": [
+            "arn:aws:iam::068084030754:root",
+            "arn:aws:iam::473630360727:root",
+            "arn:aws:iam::037161842252:root"
+          ]
+        },
       "Action": "sts:AssumeRole"
     }
   ]
@@ -28,17 +32,12 @@ resource "aws_iam_role_policy" "this" {
 
 data "aws_iam_policy_document" "this" {
   statement {
-    actions   = ["sts:AssumeRole"]
-    resources = [var.account_role_arns]
-  }
-
-  statement {
     actions = [
       "s3:*"
     ]
     resources = [
-      "var.s3_bucket_arn/*",
-      "var.s3_bucket_arn"
+      "${var.s3_bucket_arn}/*",
+      "${var.s3_bucket_arn}"
     ]
   }
 }

@@ -69,9 +69,9 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "mojo_file_transfe
 module "s3-mojo_file_transfer_assume_role" {
   source = "./modules/s3-assume-role"
 
-  prefix_name      = "s3-mojo-file-transfer"
-  account_role_arns = [local.dev_assume_role_arn, local.pre_production_assume_role_arn, local.production_assume_role_arn]
-  s3_bucket_arn   = [aws_s3_bucket.mojo_file_transfer.arn]
+  prefix_name       = "s3-mojo-file-transfer"
+#  account_ids = [ local.development_account_id, local.production_account_id, local.production_account_id ]
+  s3_bucket_arn     = aws_s3_bucket.mojo_file_transfer.arn
   tags = merge(module.label_staff.tags, {
     Name = "mojo-file-transfer"
   })
