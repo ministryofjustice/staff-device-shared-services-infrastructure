@@ -12,3 +12,7 @@ output "module_logging_heartbeat_debug" {
 output "module_label" {
   value = module.label
 }
+
+output "s3-mojo_file_transfer_assume_role_arn" {
+  value = module.s3-mojo_file_transfer_assume_role.arn
+}
