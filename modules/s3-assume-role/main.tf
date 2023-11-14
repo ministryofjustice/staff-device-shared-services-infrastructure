@@ -40,5 +40,14 @@ data "aws_iam_policy_document" "this" {
       "${var.s3_bucket_arn}"
     ]
   }
+  statement {
+    actions = [
+      "kms:Decrypt",
+      "kms:GenerateDataKey"
+    ]
+    resources = [
+      "*",
+    ]
+  }
 }
 

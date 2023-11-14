@@ -17,5 +17,5 @@ locals {
 
   development_account_id    = substr(local.dev_assume_role_arn, 13, 12)
   pre-production_account_id = substr(local.pre_production_assume_role_arn, 13, 12)
-#  production_account_id     = substr(local.production_assume_role_arn, 13, 12)
+  #  production_account_id     = substr(local.production_assume_role_arn, 13, 12)
 }
