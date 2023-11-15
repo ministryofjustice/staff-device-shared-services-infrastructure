@@ -116,7 +116,15 @@ data "aws_iam_policy_document" "this" {
     ]
     resources = formatlist("%s*", var.s3_bucket_arns)
   }
-
+  statement {
+    actions = [
+      "s3:ListBucket",
+      "s3:GetObject",
+      "s3:GetObjectVersion",
+      "s3:GetBucketVersioning"
+    ]
+    resources = ["arn:aws:s3:::*-state*"]
+  }
   statement {
     actions = [
       "codebuild:CreateReportGroup",
