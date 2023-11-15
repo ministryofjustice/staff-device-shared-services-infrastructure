@@ -3,7 +3,7 @@
 set -e
 
 log_group_names=$(aws logs describe-log-groups | jq -r '.logGroups | .[] | .logGroupName')
-retention_period=7
+retention_period=90
 
 for log_group_name in $log_group_names
 do
