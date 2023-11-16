@@ -11,46 +11,32 @@ This repository holds the Terraform code to create a [CodeBuild](https://aws.ama
 
 ## Applying the terraform
 
+You will require Docker
+
 To apply the Terraform in this project using [AWS Vault](https://github.com/99designs/aws-vault) to authenticate:
 
-1. Install required Terraform version
 
-Check the current version in the `versions.tf` file look for `required_version` in the `terraform` block.
+1. Prepare your working directory for Terraform
 
+```shell
+make init
 ```
-tfenv install <version_number>
-tfenv use <version_number>
-tfenv pin
-```
+2. Check the changes in with a plan
 
-Alternatively add the following alias to your `~/.bash_aliases` file and use that to set the required Terraform version.
-
-```
-alias tfenvuse='tfenv use $(cat versions.tf 2> /dev/null | grep required_version | cut -d "\"" -f 2) && tfenv pin'
-```
-
-
-2. Create a profile for the AWS Shared Services account, if not done so already
-```
-aws-vault add moj-shared-services
-```
-This will prompt you for the values of your AWS Shared Services account's IAM user.
-
-3. Prepare your working directory for Terraform
-
-```
-aws-vault exec moj-shared-services -- terraform init
-```
-4. Select the `ci` workspace, to apply the changes in
+```shell
+ make plan
  ```
- aws-vault exec moj-shared-services -- terraform workspace select ci
- ```
-5. Apply the changes
-```
-aws-vault exec moj-shared-services -- make apply
+3. Apply the changes
+
+```shell
+make apply
 ```
 
->Note: When inspecting the terraform plan, the OAuth tokens for each pipeline will show as changed every time.
+To view all the available target commands in the Makefile just type
+
+```shell
+make
+```
 
 ## How to use this repo
 
@@ -142,7 +128,9 @@ These secrets are decrypted at build time on CI to inject into Terraform.
 ### To add or update a secret:
 
 ``` shell script
-aws-vault exec moj-pttp-shared-services -- aws ssm put-parameter --name "/your/top/secret/name" \
+make shell
+
+aws ssm put-parameter --name "/your/top/secret/name" \
   --key-id "kms key ID to encrypt with" \
   --description "Secret description" \
   --type SecureString \
