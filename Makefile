@@ -95,9 +95,13 @@ output: ## terraform output (make output OUTPUT_ARGUMENT='--raw dns_dhcp_vpc_id'
 	$(DOCKER_RUN) terraform output -no-color $$OUTPUT_ARGUMENT
 
 .PHONY: apply
-apply: ## terraform apply
-	$(DOCKER_RUN_IT) terraform apply
+apply: ## terraform apply (make apply TARGET_ARGUMENT='-target=module.example_resource')
+	$(DOCKER_RUN_IT) terraform apply $$TARGET_ARGUMENT
 	$(DOCKER_RUN) /bin/bash -c "./scripts/ensure_cloudwatch_log_retention_policies.sh"
+
+.PHONY: apply-target
+apply-target: ## terraform apply-target (make apply-target TARGET_ARGUMENT='-target=module.example_resource')
+	$(DOCKER_RUN_IT) terraform apply $$TARGET_ARGUMENT
 
 .PHONY: state-list
 state-list: ## terraform state list
