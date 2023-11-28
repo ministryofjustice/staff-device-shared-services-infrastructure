@@ -131,7 +131,7 @@ tfenv: ## tfenv pin - terraform version from versions.tf
 
 .PHONY: get-secrets
 get-secrets: ## Retrieve for inspection the secrets the terraform data lookup retrieves.
-	$(DOCKER_RUN) /bin/bash -c "./scripts/get_secrets.sh"
+	$(DOCKER_RUN_IT) /bin/bash -c "./scripts/get_secrets.sh"
 
 .PHONY: s3-audit
 s3-audit: ## Write a report on the s3 bucket versioning status for all buckets within this AWS Account.
