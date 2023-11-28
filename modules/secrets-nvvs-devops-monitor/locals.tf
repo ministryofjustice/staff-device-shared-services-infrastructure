@@ -1,7 +1,9 @@
 locals {
+  supported-application = "nvvs-devops-monitor"
+
   additional_tags_secrets_nvvs_devops_monitor = {
     supported-application-source     = "https://github.com/ministryofjustice/nvvs-devops-monitor"
-    supported-application-secret-for = "nvvs-devops-monitor"
+    supported-application-secret-for = local.supported-application
   }
 
   tag_secrets_nvvs_devops_monitor = merge(var.tags_minus_name, local.additional_tags_secrets_nvvs_devops_monitor)
