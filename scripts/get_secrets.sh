@@ -18,7 +18,7 @@ function nvvs-devops-monitor() {
   --filters Key=tag-key,Values=${tag_name2} Key=tag-value,Values=${environment} \
   --output json | jq '.[]' --raw-output)
 
-	display_retreived_secrets "${secrets}" "${application_name}" "${environment}"
+	display_retrieved_secrets "${secrets}" "${application_name}" "${environment}"
 }
 
 function pttp-shared-services-infrastructure() {
@@ -31,10 +31,10 @@ function pttp-shared-services-infrastructure() {
   --filters Key=tag-key,Values=${tag_name} Key=tag-value,Values=${application_name} \
   --output json | jq '.[]' --raw-output)
 
-	display_retreived_secrets "${secrets}" "${KEY}" "CI"
+	display_retrieved_secrets "${secrets}" "${KEY}" "CI"
 }
 
-function display_retreived_secrets() {
+function display_retrieved_secrets() {
   local secrets=${1}
   local application_name="${2}"
   local environment="${3}"
