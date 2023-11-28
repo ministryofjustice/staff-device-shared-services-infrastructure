@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "shared_githubworkflow_role_arn" {
-  name        = "shared/shared_githubworkflow_role_arn"
+  name        = "${local.supported-application}/shared/shared_githubworkflow_role_arn"
   description = "Role ARN for GitHub Actions"
   tags        = local.tag_secrets_nvvs_devops_monitor_shared
   lifecycle { prevent_destroy = true }
