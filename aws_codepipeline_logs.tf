@@ -2,7 +2,7 @@ module "pttp-infrastructure-ci-pipeline" {
   source                   = "./modules/ci-pipeline-webhook"
   service_name             = "core"
   github_repo_id           = "ministryofjustice/staff-device-logging-infrastructure"
-  git_branch_name          = "main"
+  git_branch_name          = "decommission_infra"
   name                     = "Staff-Device-Logging"
   prefix_name              = module.label.id
   codestar_connection_arn  = aws_codestarconnections_connection.staff-infrastructure-moj.id
