@@ -3,6 +3,7 @@ module "network-access-control-infrastructure" {
   github_repo_id           = "ministryofjustice/network-access-control-infrastructure"
   git_branch_name          = "main"
   service_name             = "core"
+  docker_image             = "aws/codebuild/standard:7.0"
   manual_production_deploy = true
   production_plan          = true
   name                     = "network-access-control-infrastructure"
@@ -11,7 +12,6 @@ module "network-access-control-infrastructure" {
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
 
-  docker_image                   = "aws/codebuild/standard:7.0"
   dev_assume_role_arn            = local.dev_assume_role_arn
   production_assume_role_arn     = local.production_assume_role_arn
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
@@ -24,7 +24,7 @@ module "network-access-control-server" {
   github_repo_id           = "ministryofjustice/network-access-control-server"
   git_branch_name          = "main"
   service_name             = "core"
-  docker_image             = "aws/codebuild/standard:5.0"
+  docker_image             = "aws/codebuild/standard:7.0"
   manual_production_deploy = true
 
   name                    = "network-access-control-server"
@@ -46,7 +46,7 @@ module "network-access-control-admin" {
   github_repo_id           = "ministryofjustice/network-access-control-admin"
   git_branch_name          = "main"
   service_name             = "core"
-  docker_image             = "aws/codebuild/standard:5.0"
+  docker_image             = "aws/codebuild/standard:7.0"
   manual_production_deploy = true
 
   name                    = "network-access-control-admin"
