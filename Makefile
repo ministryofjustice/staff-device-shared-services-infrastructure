@@ -52,7 +52,7 @@ fmt: ## terraform fmt
 	$(DOCKER_RUN) terraform fmt --recursive
 
 .PHONY: init
-init:
+init: ## terraform init
 	$(DOCKER_RUN) terraform init
 	$(MAKE) workspace-select
 
