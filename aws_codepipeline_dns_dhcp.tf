@@ -13,7 +13,8 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp" {
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
   production_assume_role_arn     = local.production_assume_role_arn
 
-  tags = module.label.tags
+  docker_image = "aws/codebuild/standard:7.0"
+  tags         = module.label.tags
 }
 
 module "pttp-infrastructure-ci-pipeline-dns-container" {
@@ -31,6 +32,7 @@ module "pttp-infrastructure-ci-pipeline-dns-container" {
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
   production_assume_role_arn     = local.production_assume_role_arn
 
+  docker_image    = "aws/codebuild/standard:7.0"
   privileged_mode = true
   tags            = module.label.tags
 }
@@ -70,6 +72,7 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
   production_assume_role_arn     = local.production_assume_role_arn
 
+  docker_image    = "aws/codebuild/standard:7.0"
   privileged_mode = true
   tags            = module.label.tags
 }
