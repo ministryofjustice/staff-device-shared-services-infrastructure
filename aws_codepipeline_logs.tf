@@ -9,6 +9,7 @@ module "pttp-infrastructure-ci-pipeline" {
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
   manual_production_deploy = true
+  docker_image             = "aws/codebuild/standard:7.0"
 
   dev_assume_role_arn            = local.dev_assume_role_arn
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
@@ -27,6 +28,7 @@ module "staff-device-logging-syslog-to-cloudwatch-pipeline" {
   codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
   vpc_id                  = module.vpc.vpc_id
   subnet_ids              = module.vpc.private_subnets
+  docker_image            = "aws/codebuild/standard:7.0"
 
   dev_assume_role_arn            = local.dev_assume_role_arn
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
