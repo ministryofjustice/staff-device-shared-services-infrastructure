@@ -12,8 +12,9 @@ module "staff-infrastructure-network-services" {
   dev_assume_role_arn            = local.dev_assume_role_arn
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
   production_assume_role_arn     = local.production_assume_role_arn
-  docker_image    = "aws/codebuild/standard:7.0"
-  tags = module.label.tags
+
+  docker_image                   = "aws/codebuild/standard:7.0"
+  tags                           = module.label.tags
 }
 
 module "staff-infrastructure-smtp-relay-server" {
