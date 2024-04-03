@@ -52,6 +52,7 @@ module "pttp-infrastructure-ci-pipeline-dhcp-container" {
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
   production_assume_role_arn     = local.production_assume_role_arn
 
+  test_code_build_compute_type = "BUILD_GENERAL1_MEDIUM"
   docker_image    = "aws/codebuild/standard:7.0"
   privileged_mode = true
   tags            = module.label.tags
