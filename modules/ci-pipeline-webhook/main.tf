@@ -94,7 +94,7 @@ resource "aws_codebuild_project" "test" {
   }
 
   environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
+    compute_type                = var.test_code_build_compute_type
     image                       = var.docker_image
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
