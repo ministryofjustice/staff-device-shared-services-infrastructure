@@ -65,6 +65,6 @@ variable "tags" {
   type = map(string)
 }
 variable "test_code_build_compute_type" {
-  type = string
+  type    = string
   default = "BUILD_GENERAL1_SMALL"
 }
