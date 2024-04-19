@@ -185,8 +185,6 @@ Following table displays all the repositories [nvvs-devops-admins](https://githu
 | nvvs-devops-admins     |staff-device-dns-dhcp-infrastructure               | AWS CodePipeline |Staff Device DHCP and DNS Terraform infrastructure|
 | nvvs-devops-admins     |staff-device-dns-server                            | AWS CodePipeline |Staff Device DNS Server repository|
 | nvvs-devops-admins     |staff-device-logging-dns-dhcp-integration-tests    | Manual (y)       |Remote full stack integration tests currently run from Corsham test site. Services being |tested include Security Logging, DHCP and DNS.|
-| nvvs-devops-admins     |staff-device-logging-infrastructure                | AWS CodePipeline |Log proxy and forwarding infrastructure|
-| nvvs-devops-admins     |staff-device-logging-syslog-to-cloudwatch          | AWS CodePipeline |Docker container to forward syslog events to CloudWatch|
 | nvvs-devops-admins     |staff-device-management-intune-scripts             | ??               |Scripts that are deployed to run on MoJ OFFICIAL devices managed through Microsoft Intune|
 | nvvs-devops-admins     |staff-device-private-dns-zone                      | Github           |This repository contains the Terraform code to create and maintain private DNS zones in AWS Route 53.|
 | nvvs-devops-admins     |staff-device-shared-services-infrastructure        | Manual           |Staff Device AWS Infrastructure for build pipelines|
