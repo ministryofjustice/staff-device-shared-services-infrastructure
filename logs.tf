@@ -17,6 +17,7 @@ module "log-forward" {
         "pttp-ci-infrastructure-kea-server-log-group-core",
         "pttp-ci-infrastructure-log-group-core",
         "pttp-ci-infrastructure-log-hc-log-group-core",
+        "pttp-ci-infrastructure-log-syslog-log-group-core",
         "pttp-ci-infrastructure-pki-log-group-core",
         "pttp-ci-infrastructure-snmp-log-group-core",
         "pttp-ci-infrastructure-vpc-flow-logs-log-group",
