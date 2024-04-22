@@ -1,13 +1,15 @@
 module "staff-infrastructure-network-services" {
-  source                  = "./modules/ci-pipeline-webhook"
-  service_name            = "core"
-  github_repo_id          = "ministryofjustice/staff-infrastructure-network-services"
-  git_branch_name         = "main"
-  name                    = "staff-infrastructure-network-services"
-  prefix_name             = "${module.label.id}-net-svcs"
-  codestar_connection_arn = aws_codestarconnections_connection.nvvs-github-connection.id
-  vpc_id                  = module.vpc.vpc_id
-  subnet_ids              = module.vpc.private_subnets
+  source                   = "./modules/ci-pipeline-webhook"
+  service_name             = "core"
+  github_repo_id           = "ministryofjustice/staff-infrastructure-network-services"
+  git_branch_name          = "main"
+  name                     = "staff-infrastructure-network-services"
+  prefix_name              = "${module.label.id}-net-svcs"
+  codestar_connection_arn  = aws_codestarconnections_connection.nvvs-github-connection.id
+  vpc_id                   = module.vpc.vpc_id
+  subnet_ids               = module.vpc.private_subnets
+  manual_production_deploy = true
+  production_plan          = true
 
   dev_assume_role_arn            = local.dev_assume_role_arn
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
@@ -18,15 +20,16 @@ module "staff-infrastructure-network-services" {
 }
 
 module "staff-infrastructure-smtp-relay-server" {
-  source                  = "./modules/ci-pipeline-webhook"
-  service_name            = "core"
-  github_repo_id          = "ministryofjustice/staff-infrastructure-smtp-relay-server"
-  git_branch_name         = "main"
-  name                    = "staff-infrastructure-smtp-relay-server"
-  prefix_name             = "${module.label.id}-smtp-relay"
-  codestar_connection_arn = aws_codestarconnections_connection.staff-infrastructure-moj.id
-  vpc_id                  = module.vpc.vpc_id
-  subnet_ids              = module.vpc.private_subnets
+  source                   = "./modules/ci-pipeline-webhook"
+  service_name             = "core"
+  github_repo_id           = "ministryofjustice/staff-infrastructure-smtp-relay-server"
+  git_branch_name          = "main"
+  name                     = "staff-infrastructure-smtp-relay-server"
+  prefix_name              = "${module.label.id}-smtp-relay"
+  codestar_connection_arn  = aws_codestarconnections_connection.staff-infrastructure-moj.id
+  vpc_id                   = module.vpc.vpc_id
+  subnet_ids               = module.vpc.private_subnets
+  manual_production_deploy = true
 
   dev_assume_role_arn            = local.dev_assume_role_arn
   pre_production_assume_role_arn = local.pre_production_assume_role_arn
