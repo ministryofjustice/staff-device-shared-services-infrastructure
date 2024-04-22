@@ -1,6 +1,8 @@
 resource "aws_dynamodb_table" "dynamodb_terraform_state_lock" {
-  name     = "${var.prefix_name}-client-${var.service_name}-tf-lock-table"
-  hash_key = "LockID"
+  name             = "${var.prefix_name}-client-${var.service_name}-tf-lock-table"
+  hash_key         = "LockID"
+  read_capacity    = 1
+  write_capacity   = 1
 
   attribute {
     name = "LockID"
