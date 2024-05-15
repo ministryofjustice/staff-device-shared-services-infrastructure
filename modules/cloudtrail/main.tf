@@ -57,6 +57,15 @@ resource "aws_s3_bucket" "cloudtrail_bucket" {
   tags = var.tags
 }
 
+resource "aws_s3_bucket_public_access_block" "cloudtrail_bucket_block_access" {
+  bucket = element(aws_s3_bucket.cloudtrail_bucket.*.id, 0)
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
 resource "aws_s3_bucket_policy" "cloudtrail_bucket" {
   count = local.cloudtrail_log_shipping_to_cloudwatch_count
 
