@@ -31,6 +31,19 @@ function pttp-shared-services-infrastructure() {
   --filters Key=tag-key,Values=${tag_name} Key=tag-value,Values=${application_name} \
   --output json | jq '.[]' --raw-output)
 
+	display_retrieved_secrets "${secrets}" "${KEY}" "production"
+}
+
+function staff-infrastructure-certificate-services() {
+  echo ""
+  local tag_name=application
+  local application_name="staff-infrastructure-certificate-services"
+
+  local secrets=$(aws secretsmanager list-secrets --no-cli-pager \
+  --query "SecretList[].Name" \
+  --filters Key=tag-key,Values=${tag_name} Key=tag-value,Values=${application_name} \
+  --output json | jq '.[]' --raw-output)
+
 	display_retrieved_secrets "${secrets}" "${KEY}" "CI"
 }
 
@@ -73,6 +86,7 @@ $(ColorGreen '1)') nvvs-devops-monitor development
 $(ColorGreen '2)') nvvs-devops-monitor pre-production
 $(ColorGreen '3)') nvvs-devops-monitor production
 $(ColorGreen '4)') pttp-shared-services-infrastructure
+$(ColorGreen '5)') staff-infrastructure-certificate-services
 $(ColorGreen '0)') Exit
 $(ColorBlue 'Choose an option:') "
         read a
@@ -81,6 +95,7 @@ $(ColorBlue 'Choose an option:') "
 	        2) nvvs-devops-monitor "pre-production" && nvvs-devops-monitor "shared";;
 	        3) nvvs-devops-monitor "production" && nvvs-devops-monitor "shared";;
 	        4) pttp-shared-services-infrastructure ;;
+	        5) staff-infrastructure-certificate-services ;;
 		0) exit 0 ;;
 		*) echo -e $red"Wrong option."$clear; WrongCommand;;
         esac
