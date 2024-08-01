@@ -73,7 +73,6 @@ module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
   vpc_id                   = module.vpc.vpc_id
   subnet_ids               = module.vpc.private_subnets
   manual_production_deploy = true
-  production_plan          = true
 
   dev_assume_role_arn            = local.dev_assume_role_arn
   pre_production_assume_role_arn = local.pre_production_assume_role_arn

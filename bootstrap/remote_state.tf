@@ -13,20 +13,31 @@ resource "aws_s3_bucket" "s3_state" {
     enabled = true
   }
 
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = aws_kms_key.state_key.arn
-        sse_algorithm     = "aws:kms"
-      }
-    }
-  }
+  # server_side_encryption_configuration {
+  #   rule {
+  #     apply_server_side_encryption_by_default {
+  #       kms_master_key_id = aws_kms_key.state_key.arn
+  #       sse_algorithm     = "aws:kms"
+  #     }
+  #   }
+  # }
 
   lifecycle {
     prevent_destroy = true
   }
 
   tags = module.label.tags
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "s3_state_encryption_config" {
+  bucket = aws_s3_bucket.s3_state.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = aws_kms_key.s3_state.arn
+      sse_algorithm     = "aws:kms"
+    }
+  }
 }
 
 # create a dynamodb table for locking the state file
