@@ -1,5 +1,6 @@
 resource "aws_codepipeline" "codepipeline" {
   name     = var.name
+  pipeline_type = "V2"
   role_arn = aws_iam_role.codepipeline_role.arn
 
   artifact_store {
@@ -9,6 +10,25 @@ resource "aws_codepipeline" "codepipeline" {
     encryption_key {
       id   = aws_kms_key.artifacts.arn
       type = "KMS"
+    }
+  }
+
+  trigger {
+    provider_type  = "CodeStarSourceConnection"
+    git_configuration {
+      source_action_name = "Source"
+      pull_request {
+        events = ["CLOSED"]
+        branches {
+          includes = ["main"]
+        }
+        file_paths {
+          excludes = ["README.md", 
+                      ".github/*.yml",
+                      ".github/workflows/*.yml", 
+                      "workflows/*.yml"]
+        }
+      } 
     }
   }
 

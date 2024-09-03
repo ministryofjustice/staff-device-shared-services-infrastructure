@@ -137,5 +137,10 @@ get-secrets: ## Retrieve for inspection the secrets the terraform data lookup re
 s3-audit: ## Write a report on the s3 bucket versioning status for all buckets within this AWS Account.
 	$(DOCKER_RUN) /bin/bash -c "./scripts/s3_versioning_audit.sh"
 
+.PHONY: target
+target: ## terraform apply target
+	$(DOCKER_RUN) terraform apply -target="module.pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container.aws_codepipeline.codepipeline" --auto-approve
+
+
 help:
 	@grep -h -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
