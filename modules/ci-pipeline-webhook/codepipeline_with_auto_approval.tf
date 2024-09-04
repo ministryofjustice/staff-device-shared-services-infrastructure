@@ -26,7 +26,11 @@ resource "aws_codepipeline" "codepipeline" {
           excludes = ["README.md", 
                       ".github/*.yml",
                       ".github/workflows/*.yml", 
-                      "workflows/*.yml"]
+                      "workflows/*.yml",
+                      "documentation/*.md",
+                      "documentation/diagrams/*.drawio",
+                      "diagrams/*.drawio",
+                      "diagrams/*.png"]
         }
       } 
     }
