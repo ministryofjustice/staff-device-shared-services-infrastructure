@@ -17,8 +17,7 @@ resource "aws_codepipeline" "codepipeline" {
     provider_type  = "CodeStarSourceConnection"
     git_configuration {
       source_action_name = "Source"
-      pull_request {
-        events = ["CLOSED"]
+      push {
         branches {
           includes = ["main"]
         }
