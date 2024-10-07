@@ -6,8 +6,8 @@ variable "development_account_id" {
   type = string
 }
 
-variable "pre-production_account_id" {
-  type = map(string)
+variable "pre_production_account_id" {
+  type = string
 }
 
 variable "prefix" {

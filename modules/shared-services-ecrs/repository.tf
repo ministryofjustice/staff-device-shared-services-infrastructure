@@ -21,7 +21,7 @@ resource "aws_ecr_repository_policy" "admin_docker_dhcp_repository_policy" {
                 "${data.aws_caller_identity.current.account_id}",
                 "${var.production_account_id}",
                 "${var.development_account_id}",
-                "${var.pre-production_account_id}",
+                "${var.pre_production_account_id}"
             ]},
             "Action": [
                 "ecr:GetDownloadUrlForLayer",
