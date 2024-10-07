@@ -13,9 +13,4 @@ locals {
   pre_production_kinesis_destination_arn = nonsensitive(data.aws_secretsmanager_secret_version.pre_production_kinesis_destination_arn.secret_string)
   development_kinesis_destination_arn    = nonsensitive(data.aws_secretsmanager_secret_version.development_kinesis_destination_arn.secret_string)
 
-  production_account_id = nonsensitive(data.aws_secretsmanager_secret_version.production_account_id.secret_string)
-
-  development_account_id    = substr(local.dev_assume_role_arn, 13, 12)
-  pre-production_account_id = substr(local.pre_production_assume_role_arn, 13, 12)
-  #  production_account_id     = substr(local.production_assume_role_arn, 13, 12)
 }

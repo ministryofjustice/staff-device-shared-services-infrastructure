@@ -58,3 +58,15 @@ data "aws_secretsmanager_secret" "production_account_id" {
 data "aws_secretsmanager_secret_version" "production_account_id" {
   secret_id = data.aws_secretsmanager_secret.production_account_id.id
 }
+
+data "aws_ssm_parameter" "production_account_id" {
+  name = "/codebuild/production/account_id"
+}
+
+data "aws_ssm_parameter" "pre_production_account_id" {
+  name = "/codebuild/pre-production/account_id"
+}
+
+data "aws_ssm_parameter" "development_account_id" {
+  name = "/codebuild/development/account_id"
+}

@@ -65,5 +65,5 @@ module "logging_heartbeat" {
 module "cloudwatch_exporter_role" {
   source = "./modules/cloudwatch_exporter_role"
 
-  production_account_id = local.production_account_id
+  production_account_id = data.aws_ssm_parameter.production_account_id
 }
