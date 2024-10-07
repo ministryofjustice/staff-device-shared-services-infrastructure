@@ -78,3 +78,14 @@ module "label_mojo_aws_github" {
     "source-code"      = "https://github.com/ministryofjustice/staff-device-shared-services-infrastructure"
   }
 }
+
+
+module "shared-services-ecrs" {
+  source = "./modules/shared-services-ecrs"
+
+  production_account_id = data.aws_ssm_parameter.production_account_id
+  pre-production_account_id = data.aws_ssm_parameter.pre_production_account_id
+  development_account_id = data.aws_ssm_parameter.development_account_id
+  prefix = "${module.label.id}-ecrs"
+  tags = module.label.tags
+}
