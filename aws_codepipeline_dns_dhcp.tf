@@ -63,7 +63,7 @@ module "pttp-infrastructure-ci-pipeline-dhcp-container" {
 }
 
 module "pttp-infrastructure-ci-pipeline-dns-dhcp-admin-container" {
-  source                   = "./modules/ci-pipeline-webhook"
+  source                   = "./modules/ci-pipeline-webhook-v2"
   service_name             = "core"
   github_repo_id           = "ministryofjustice/staff-device-dns-dhcp-admin"
   git_branch_name          = "main"
