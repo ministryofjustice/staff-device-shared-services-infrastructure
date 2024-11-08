@@ -89,23 +89,3 @@ module "staff-device-dhcp-admin-ecrs" {
   prefix = "staff-device-dhcp-admin"
   tags = module.label.tags
 }
-
-module "staff-device-dhcp-nginx-ecrs" {
-  source = "./modules/shared-services-ecrs"
-
-  production_account_id = data.aws_ssm_parameter.production_account_id.value
-  pre_production_account_id = data.aws_ssm_parameter.pre_production_account_id.value
-  development_account_id = data.aws_ssm_parameter.development_account_id.value
-  prefix = "staff-device-dhcp-nginx"
-  tags = module.label.tags
-}
-
-module "staff-device-dhcp-ecrs" {
-  source = "./modules/shared-services-ecrs"
-
-  production_account_id = data.aws_ssm_parameter.production_account_id.value
-  pre_production_account_id = data.aws_ssm_parameter.pre_production_account_id.value
-  development_account_id = data.aws_ssm_parameter.development_account_id.value
-  prefix = "staff-device-dhcp"
-  tags = module.label.tags
-}
