@@ -206,3 +206,16 @@ resource "aws_secretsmanager_secret_version" "production_alz_cidr_block" {
   secret_string = "XXXX_NOT_REAL_VALUE_XXXX"
   lifecycle { ignore_changes = [secret_string] }
 }
+
+resource "aws_secretsmanager_secret" "production_ms_teams_webhook_url" {
+  name        = "${local.supported-application}/production/ms_teams_webhook_url"
+  description = "Production MS Teams Webhook URL"
+  tags        = merge(local.tag_secrets_staff_infrastructure_certificate_services_production, { env_var = "TF_VAR_ms_teams_webhook_url" }, { tf_var = "ms_teams_webhook_url" })
+  lifecycle { prevent_destroy = true }
+}
+
+resource "aws_secretsmanager_secret_version" "production_ms_teams_webhook_url" {
+  secret_id     = aws_secretsmanager_secret.production_ms_teams_webhook_url.id
+  secret_string = "XXXX_NOT_REAL_VALUE_XXXX"
+  lifecycle { ignore_changes = [secret_string] }
+}
