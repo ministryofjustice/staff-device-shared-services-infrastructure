@@ -29,7 +29,8 @@ resource "aws_codepipeline" "codepipeline" {
                       "documentation/*.md",
                       "documentation/diagrams/*.drawio",
                       "diagrams/*.drawio",
-                      "diagrams/*.png"]
+                      "diagrams/*.png",
+                      "scripts/*.sh"]
         }
       } 
     }
