@@ -22,6 +22,17 @@ module "staff-devops-monitoring" {
   production_assume_role_arn     = local.production_assume_role_arn
 }
 
+module "network-operations-centre" {
+  source         = "./modules/tf-state-mgt"
+  service_name   = "noc"
+  prefix_name    = module.label_staff.id
+  github_repo_id = "https://github.com/ministryofjustice/deployment-aws-noc"
+  tags           = module.label_staff.tags
+
+  pre_production_assume_role_arn = "arn:aws:iam::724777394818:role/SharedServicesAccessRole"
+  production_assume_role_arn     = "arn:aws:iam::208632142291:role/SharedServicesAccessRole"
+}
+
 module "staff-github-teams" {
   source         = "./modules/tf-state-mgt"
   service_name   = "github-teams"

@@ -16,12 +16,15 @@ variable "github_repo_id" {
 
 variable "dev_assume_role_arn" {
   type = string
+  default = "no-environment-defined"
 }
 
 variable "pre_production_assume_role_arn" {
   type = string
+  default = "no-environment-defined"
 }
 
 variable "production_assume_role_arn" {
   type = string
+  default = "no-environment-defined"
 }
